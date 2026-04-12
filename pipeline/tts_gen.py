@@ -16,6 +16,43 @@ import requests
 import config
 from pipeline.script_gen import Script
 
+_FFMPEG_FALLBACK_DIRS = [
+    Path(r"C:\\ffmpeg\\bin"),
+    Path(r"C:\\ffmpeg"),
+    Path(r"C:\\Program Files\\ffmpeg\\bin"),
+    Path(r"C:\\Program Files (x86)\\ffmpeg\\bin"),
+]
+
+
+def _resolve_binary(name: str) -> str | None:
+    """실행 파일 경로를 결정한다 (PATH + Windows 기본 경로)."""
+    env_keys = [f"{name.upper()}_BIN"]
+    if name == "ffmpeg":
+        env_keys.append("FFMPEG_PATH")
+
+    for key in env_keys:
+        raw = os.environ.get(key, "").strip().strip('"')
+        if not raw:
+            continue
+        candidate = Path(raw)
+        if candidate.is_dir():
+            candidate = candidate / (f"{name}.exe" if os.name == "nt" else name)
+        if candidate.exists():
+            return str(candidate)
+
+    found = shutil.which(name)
+    if found:
+        return found
+
+    if os.name == "nt":
+        exe_name = f"{name}.exe"
+        for base in _FFMPEG_FALLBACK_DIRS:
+            candidate = base / exe_name
+            if candidate.exists():
+                return str(candidate)
+
+    return None
+
 
 _EDGE_EN_FALLBACK_VOICE_BY_CATEGORY = {
     1: "en-US-JennyNeural",
@@ -123,9 +160,10 @@ def get_audio_duration(path: Path) -> float:
     우선순위: ffprobe → mutagen → 파일크기 추정
     """
     # 1. ffprobe (ffmpeg 설치된 환경)
-    if shutil.which("ffprobe"):
+    ffprobe_bin = _resolve_binary("ffprobe")
+    if ffprobe_bin:
         result = subprocess.run(
-            ["ffprobe", "-v", "quiet", "-print_format", "json", "-show_format", str(path)],
+            [ffprobe_bin, "-v", "quiet", "-print_format", "json", "-show_format", str(path)],
             capture_output=True, text=True, encoding="utf-8", errors="replace",
         )
         if result.returncode == 0:
@@ -148,13 +186,14 @@ def get_audio_duration(path: Path) -> float:
 def _concat_audio_files(audio_files: list[Path], output_path: Path) -> None:
     """오디오 파일 연결. ffmpeg → pydub → raw 바이트 순 fallback."""
     # 1. ffmpeg
-    if shutil.which("ffmpeg"):
+    ffmpeg_bin = _resolve_binary("ffmpeg")
+    if ffmpeg_bin:
         list_file = output_path.parent / "concat_list.txt"
         with open(list_file, "w", encoding="utf-8") as f:
             for audio in audio_files:
                 f.write(f"file '{audio.resolve()}'\n")
         result = subprocess.run(
-            ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(list_file), "-c", "copy", str(output_path)],
+            [ffmpeg_bin, "-y", "-f", "concat", "-safe", "0", "-i", str(list_file), "-c", "copy", str(output_path)],
             capture_output=True, text=True, encoding="utf-8", errors="replace",
         )
         list_file.unlink(missing_ok=True)
@@ -260,7 +299,8 @@ def apply_playback_speed(script: Script, job_dir: Path, speed_percent: int) -> S
     if speed_percent == 0:
         return script
 
-    if not shutil.which("ffmpeg"):
+    ffmpeg_bin = _resolve_binary("ffmpeg")
+    if not ffmpeg_bin:
         print("    ffmpeg가 없어 재생 속도 조정을 건너뜁니다.")
         return script
 
@@ -279,7 +319,7 @@ def apply_playback_speed(script: Script, job_dir: Path, speed_percent: int) -> S
     for src in mp3_files:
         tmp = src.with_name(f"{src.stem}.speed.tmp.mp3")
         cmd = [
-            "ffmpeg", "-y",
+            ffmpeg_bin, "-y",
             "-i", str(src),
             "-filter:a", f"atempo={speed_ratio:.4f}",
             "-vn",
@@ -404,5 +444,3 @@ def _generate_subtitles(script: "Script", job_dir: Path) -> None:
     vtt_path.write_text("\n".join(vtt_lines), encoding="utf-8")
 
     print(f"    자막: {srt_path.name} / {vtt_path.name} ({entry_idx - 1}개 항목)")
-
-
