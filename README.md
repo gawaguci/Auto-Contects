@@ -136,14 +136,42 @@ python _run_pipeline.py --auto --category 1 --version shorts --lang ko --tts edg
 
 ## 환경 설정
 
-`.env` 파일에 아래 키를 설정합니다:
+1) 먼저 템플릿을 복사해 `.env`를 만듭니다.
+
+```bash
+cp .env.example .env
+```
+
+Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+2) `.env` 파일에 필요한 키만 채웁니다.
 
 ```
-GEMINI_API_KEY=...
-ELEVENLABS_API_KEY=...
-ELEVENLABS_VOICE_ID=...
-PEXELS_API_KEY=...
-PIXABAY_API_KEY=...
+# Claude API (선택)
+USE_CLAUDE_API=0
+ANTHROPIC_API_KEY=
+
+# 이미지 생성/수집 (선택)
+GEMINI_API_KEY=
+GEMINI_IMAGE_MODEL=gemini-3.1-flash-image-preview
+PEXELS_API_KEY=
+PIXABAY_API_KEY=
+
+# TTS (선택)
+ELEVENLABS_API_KEY=
+TYPECAST_API_KEY=
+TYPECAST_VOICE_ID=
+
+# Remotion/브라우저 (선택)
+REMOTION_BROWSER_EXECUTABLE=
+
+# ffmpeg 경로 (선택)
+FFMPEG_PATH=C:\ffmpeg\ffmpeg.exe
+FFPROBE_BIN=C:\ffmpeg\ffprobe.exe
 ```
 
 의존성 설치:

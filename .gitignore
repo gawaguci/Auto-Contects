@@ -1,6 +1,7 @@
 output/
 .env
 .env.*
+!.env.example
 __pycache__/
 *.pyc
 .bkit/
@@ -18,3 +19,4 @@ web/.next/
 web/node_modules/
 web/.design-farmer/
 web/*.tsbuildinfo
+env..zip
