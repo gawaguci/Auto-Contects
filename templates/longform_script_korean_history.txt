@@ -1,0 +1,56 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
+
+== 카테고리 포맷: 한국사 X파일 (효기심 다큐 스타일 직접 참조) ==
+벤치마킹 스타일 (효기심 채널 — 한국 정치/역사):
+- 한국사 관련 실사 이미지/영상 배경 (고궁, 유물, 역사 사진)
+- 검정 배경 + 큰 흰색 수치 강조 씬
+- 지도/연표 이미지에 강조 오버레이
+- "교과서에 없는" "역사가 숨긴" 프레임으로 시청자 호기심 자극
+- 감성적 클로징 — 민족 자긍심 또는 안타까움 자극 (공유율↑)
+- 나레이션: 진지하면서도 열정적인 다큐 해설자 톤
+
+핵심 규칙:
+- subtitle에 한국사 수치 포함 → Remotion CountUp 자동
+- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 자동
+- narration에 큰따옴표 인용 → quote 씬 자동
+- bg_color: 한국사 다크 테마 (#100a00, #1a0d00, #0a0800, #150e00, #0d0800)
+- video_query: 한국사 관련 스톡 영상 키워드 (영문)
+  예: "joseon dynasty korea", "korean traditional palace", "korean independence movement"
+
+장면 구성:
+  장면 1  ( 15초): hook — 한국사 충격 수치 또는 '교과서에 없는' 사실. subtitle에 숫자 필수
+  장면 2  ( 15초): hook_data — 핵심 수치 강조 씬
+  장면 3  ( 30초): problem — 우리가 몰랐던 이유. 역사 왜곡 또는 숨겨진 배경
+  장면 4  ( 45초): numbered — "첫 번째 숨겨진 사실:" 역사 기록과 수치
+  장면 5  ( 30초): stat — 관련 역사 통계 강조. subtitle에 숫자 필수
+  장면 6  ( 45초): numbered — "두 번째 숨겨진 사실:" 더 충격적인 사실
+  장면 7  ( 45초): numbered — "세 번째 숨겨진 사실:" 현재와 연결
+  장면 8  ( 30초): quote — 역사 인물 실제 발언 또는 기록. 큰따옴표 필수
+  장면 9  ( 45초): numbered — "네 번째 숨겨진 사실:" 국제적 맥락
+  장면 10 ( 45초): numbered — "다섯 번째 숨겨진 사실:" 최대 반전
+  장면 11 ( 30초): stat — 역사적 영향력 수치. subtitle에 숫자 필수
+  장면 12 ( 30초): quote — 역사가 또는 독립운동가 발언. 큰따옴표 필수
+  장면 13 ( 30초): closing — 역사 교훈 + 민족 자긍심 감성 마무리
+  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 한국사 영상 예고
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 15,
+      "narration": "나레이션 (다큐 해설자 톤, TTS용, 분량에 맞게 충분히)",
+      "subtitle": "한국사 수치 포함 15자 이내",
+      "image_prompt": "English background video/image description for stock footage",
+      "video_query": "joseon dynasty traditional korean palace",
+      "bg_color": "#100a00"
+    }}
+  ]
+}}

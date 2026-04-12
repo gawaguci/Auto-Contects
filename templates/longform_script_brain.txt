@@ -1,0 +1,56 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 롱폼 스크립트를 생성하라. 총 15장면, 540초(9분).
+
+== 카테고리 포맷: 뇌과학 (효기심 다큐 스타일 참조) ==
+벤치마킹 스타일:
+- 뇌/신경망 시각화 배경 + 연구 수치 강조 씬
+- 검정/딥블루 배경 + 큰 흰색 연구 결과 수치
+- "연구에 따르면" → 수치 강조 씬 → 메커니즘 설명 반복 구조
+- 실용적 solution이 후반부 핵심 — 시청 유지율 최고 구간
+- 나레이션: 과학 다큐 해설자 톤, 권위 있으면서도 친근하게
+
+핵심 규칙:
+- subtitle에 뇌과학 연구 수치 포함 → Remotion CountUp 자동
+- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 자동
+- narration에 "방법/루틴/하면/해보세요" → solution 씬 자동
+- bg_color: 뇌과학 딥블루 테마 (#020b18, #041018, #071520, #042f2e, #020818)
+- video_query: 뇌과학 관련 스톡 영상 키워드 (영문)
+  예: "neuroscience brain MRI", "focus concentration study", "sleep brain waves"
+
+장면 구성:
+  장면 1  ( 15초): hook — 뇌과학 연구 충격 수치. subtitle에 숫자 필수
+  장면 2  ( 15초): hook_data — 수치 강조 씬. 현대인이 겪는 문제 직관적 표현
+  장면 3  ( 30초): problem — 뇌과학적 원인. 도파민/전두엽/코르티솔 키워드
+  장면 4  ( 30초): stat — 연구 결과 수치 강조. subtitle에 숫자 필수
+  장면 5  ( 45초): numbered — "첫 번째 근거:" 연구/실험으로 증명된 사실
+  장면 6  ( 45초): numbered — "두 번째 근거:" 뇌 메커니즘 상세 설명
+  장면 7  ( 30초): stat — 나쁜 습관이 뇌에 미치는 영향 수치
+  장면 8  ( 45초): numbered — "세 번째 근거:" 일상 습관과 뇌의 연결
+  장면 9  ( 30초): quote — 뇌과학자 또는 신경과학 연구 인용. 큰따옴표 필수
+  장면 10 ( 45초): solution — "첫 번째 방법:" 즉시 실천 가능. "하루 X분이면" 수치 포함
+  장면 11 ( 45초): solution — "두 번째 방법:" 수면/식단/운동 뇌과학 근거
+  장면 12 ( 45초): solution — "세 번째 방법:" 장기 루틴으로 뇌 구조 변화
+  장면 13 ( 30초): stat — 방법 적용 후 뇌 변화 수치. subtitle에 숫자 필수
+  장면 14 ( 30초): closing — 핵심 메시지 + 뇌과학이 증명한 결론
+  장면 15 ( 30초): closing — 구독/좋아요 CTA + 다음 영상 예고
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 15,
+      "narration": "나레이션 (과학 다큐 톤, TTS용, 분량에 맞게 충분히)",
+      "subtitle": "뇌과학 수치 포함 15자 이내",
+      "image_prompt": "English background video/image description for stock footage",
+      "video_query": "brain neuroscience dark blue",
+      "bg_color": "#020b18"
+    }}
+  ]
+}}

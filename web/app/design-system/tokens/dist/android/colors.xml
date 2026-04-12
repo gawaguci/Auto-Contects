@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <color name="color_primary_50">#ffe8f0f8</color>
+  <color name="color_primary_100">#ffc8d9ef</color>
+  <color name="color_primary_200">#ffa3bee5</color>
+  <color name="color_primary_300">#ff80a3d8</color>
+  <color name="color_primary_400">#ff638ece</color>
+  <color name="color_primary_500">#ff4878c4</color>
+  <color name="color_primary_600">#ff3a65b0</color>
+  <color name="color_primary_700">#ff2f539c</color>
+  <color name="color_primary_800">#ff264388</color>
+  <color name="color_primary_900">#ff142660</color>
+  <color name="color_primary_950">#ff0a1540</color>
+  <color name="color_neutral_50">#fff7f8fa</color>
+  <color name="color_neutral_100">#ffeef0f4</color>
+  <color name="color_neutral_200">#ffe1e4ea</color>
+  <color name="color_neutral_300">#ffc8cdd8</color>
+  <color name="color_neutral_400">#ffa4acbc</color>
+  <color name="color_neutral_500">#ff7a8499</color>
+  <color name="color_neutral_600">#ff5e6880</color>
+  <color name="color_neutral_700">#ff4a5268</color>
+  <color name="color_neutral_800">#ff363d52</color>
+  <color name="color_neutral_900">#ff222840</color>
+  <color name="color_neutral_950">#ff161c30</color>
+  <color name="color_success">#ff3a8c5a</color>
+  <color name="color_warning">#ffc47a20</color>
+  <color name="color_error">#ffc44028</color>
+  <color name="color_info">#ff3a78c4</color>
+  <color name="color_white">#ffffffff</color>
+  <color name="color_black">#ff000000</color>
+</resources>

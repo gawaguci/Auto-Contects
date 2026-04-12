@@ -1,0 +1,90 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 쇼츠 스크립트를 생성하라. 총 10장면, 90초.
+
+== 카테고리 포맷: 심리학 ==
+성공 패턴: 숫자 통계 훅 → problem → numbered 이유 × 3 → stat 수치 강조 → solution × 2 → closing
+핵심 규칙:
+- 장면 1 subtitle에 반드시 숫자+단위 포함 (예: "73% 모른다", "2배 더 강해", "47초밖에")
+  → Remotion CountUp 애니메이션이 자동으로 숫자를 카운트업함
+- 장면 3~5 narration에 "첫 번째", "두 번째", "세 번째" 포함
+  → Remotion numbered 씬 타입이 원형 숫자 배지를 자동 표시함
+- 장면 6 subtitle에 반드시 숫자+단위 포함
+  → Remotion stat 씬 타입(📊 통계 배지) 자동 적용
+- 장면 7~8 narration에 "대신", "방법", "하세요", "루틴", "습관" 중 하나 포함
+  → Remotion solution 씬 타입(✅ 해결법 배지) 자동 적용
+- bg_color: 심리학 테마 — 보라/남색 계열 (#1a1a2e, #2d1b69, #1a0d2e, #0d1a3e)
+
+장면 구성:
+  장면 1 ( 4초): hook     — subtitle에 통계 수치 필수. "XX%의 사람이" 또는 "뇌는 X배" 형태
+  장면 2 (10초): problem  — 이 현상이 왜 일어나는지 과학적 배경. 심리학 용어 포함
+  장면 3 (12초): numbered — "첫 번째 이유:" 로 시작. 구체적 심리학 메커니즘
+  장면 4 (12초): numbered — "두 번째 이유:" 로 시작. 행동경제학 실험/연구 결과
+  장면 5 (12초): numbered — "세 번째 이유:" 로 시작. 일상 속 사례로 연결
+  장면 6 ( 8초): stat     — 핵심 수치 하나를 크게 강조. subtitle에 숫자+단위 필수
+  장면 7 (12초): solution — "이 심리를 역이용하는 첫 번째 방법" 실용적 팁
+  장면 8 (10초): solution — "두 번째 방법:" 즉시 실천 가능한 구체적 팁
+  장면 9 (10초): closing  — 핵심 메시지 한 문장 + 여운. subtitle은 주제 핵심어
+  장면 10( 8초): closing  — 구독/좋아요 CTA. subtitle: "구독 클릭"
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (심리학) ━━━
+공통: 영문 작성, no text, no watermark 항상 포함. 분위기: deep purple, dark navy, violet glow
+
+⚡ image_prompt 핵심 규칙 (반드시 준수):
+  각 씬의 narration에 등장하는 핵심 개념·키워드를 영문으로 번역하여 image_prompt에 반드시 포함할 것.
+  씬 역할(hook/problem/numbered 등)의 조명·구도 + narration 핵심어 결합 = 주제와 일치하는 이미지.
+  예: narration "인지 편향 — 뇌는 에너지를 아끼기 위해 익숙한 패턴만 해석한다"
+      → "brain filtering reality through cognitive bias lens, familiar patterns glowing while new info fades, tunnel vision psychology metaphor, dramatic side lighting, deep purple atmosphere, no text, no watermark"
+  예: narration "확증 편향 — 믿고 싶은 것만 보이도록 정보를 필터링"
+      → "confirmation bias spotlight illuminating only matching puzzle pieces while contradictory evidence stays dark, sharp contrast, cinematic, no text, no watermark"
+
+장면 1 (hook): narration의 충격 수치를 시각화. 시청자를 멈추게 하는 강렬한 심리 비주얼
+  구도: extreme close-up, single harsh spotlight, pitch black background
+  예: glowing human brain with cracks of violet light showing [narration 핵심 수치 시각화], extreme close-up, single harsh spotlight, pitch black background, hyper-realistic, no text, no watermark
+
+장면 2 (problem): narration의 심리 문제 상황을 시각화. 어둡고 불안한 이미지
+  구도: cold blue harsh lighting, deep shadow, psychological tension
+  예: person trapped [narration 심리 상황 영문 시각화], cold blue harsh lighting, deep shadow, psychological tension, no text, no watermark
+
+장면 3~5 (numbered): narration에서 설명하는 각 심리 개념을 직접 시각화
+  구도: bold symbolic object, dramatic side lighting, deep purple atmosphere
+  narration 키워드를 영문으로 번역해 image_prompt의 핵심 요소로 사용할 것
+  예(narration "인지 편향"): brain filtering information through cognitive bias, only familiar patterns visible, tunnel with identical doors one glowing violet, no text, no watermark
+  예(narration "확증 편향"): confirmation bias spotlight on matching belief, contradictory evidence in shadow, puzzle piece illuminated alone, no text, no watermark
+  예(narration "생존 본능"): survival instinct overreaction to modern stress, human silhouette with glowing amygdala in red fight-or-flight mode, no text, no watermark
+
+장면 6 (stat): narration의 핵심 통계를 추상적으로 시각화. 숫자 텍스트 없이
+  구도: abstract statistical visualization, deep purple dark background
+  예: [narration 수치 시각화] thousands of glowing data particles forming human brain shape, abstract statistical visualization, deep purple dark background, no text, no watermark
+
+장면 7~8 (solution): narration의 실천 방법을 희망적으로 시각화. 어둠에서 빛으로 전환
+  구도: warm golden light, uplifting atmosphere, wide cinematic
+  예: [narration 방법 영문 시각화] beam of soft golden light breaking through dark storm representing [핵심 실천법], wide cinematic, warm uplifting atmosphere, no text, no watermark
+
+장면 9 (closing): narration의 핵심 메시지를 여운 있게 시각화
+  구도: epic cinematic wide, emotional depth, philosophical
+  예: lone figure silhouette [narration 핵심 메시지 시각화] before vast glowing violet cosmos, epic cinematic wide, emotional depth, no text, no watermark
+
+장면 10 (CTA): 주제 오브젝트로 강렬하게 마무리
+  예: glowing brain levitating in dark space with purple energy aura, premium dark background, cinematic finale, no text, no watermark
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 4,
+      "narration": "나레이션 (자연스러운 구어체, TTS용)",
+      "subtitle": "숫자+단위 포함 15자 이내",
+      "image_prompt": "English only. RULE: Translate THIS scene's narration KEY CONCEPT into a vivid visual subject — what object/person/phenomenon PHYSICALLY represents the narration idea. Structure: [Specific visual subject embodying narration concept] + [what it is doing/state] + [environment/atmosphere] + [camera angle]. BAD: 'psychology concept dark background'. GOOD: 'glowing human brain split in half, left side firing bright synapses while right side dims into shadow, representing cognitive bias filtering reality, pitch black void, extreme macro close-up'. No text, no letters.",
+      "bg_color": "#1a1a2e"
+    }}
+  ]
+}}

@@ -1,0 +1,10 @@
+{
+  "radius": {
+    "none":    { "$value": "0px",    "$type": "dimension" },
+    "tight":   { "$value": "4px",    "$type": "dimension" },
+    "default": { "$value": "8px",    "$type": "dimension" },
+    "loose":   { "$value": "12px",   "$type": "dimension" },
+    "xl":      { "$value": "16px",   "$type": "dimension" },
+    "full":    { "$value": "9999px", "$type": "dimension" }
+  }
+}

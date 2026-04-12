@@ -1,0 +1,97 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 쇼츠 스크립트를 생성하라. 총 10장면, 90초.
+
+== 카테고리 포맷: 돈의 심리학 ==
+성공 패턴: 충격 수치 훅 → 심리 편향 problem → 부자 습관 numbered × 3 → stat 수치 → 투자자 명언 quote → 실천법 solution → closing
+핵심 규칙:
+- 장면 1 subtitle에 반드시 금액/퍼센트/배수 포함 (예: "복리 72의 법칙", "손실 2배 강해", "20% 저축")
+  → Remotion CountUp 애니메이션이 자동으로 숫자를 카운트업함
+- 장면 2 narration: 손실회피/앵커링/매몰비용/확증편향 등 행동경제학 용어로 problem 제기
+- 장면 3~5 narration에 "첫 번째", "두 번째", "세 번째" 포함
+  → Remotion numbered 씬 타입(원형 숫자 배지) 자동 적용
+- 장면 6 subtitle에 반드시 금융 수치 포함
+  → Remotion stat 씬 타입(📊 통계 배지) 자동 적용
+- 장면 7 narration에 유명 투자자의 실제 명언을 큰따옴표("")로 인용
+  → Remotion quote 씬 타입(💬 인용 배지) 자동 적용
+  추천 인물: 워런 버핏, 찰리 멍거, 레이 달리오, 피터 린치, 벤자민 그레이엄
+- 장면 8 narration: "방법", "하면 됩니다", "시작하세요", "루틴" 포함
+  → Remotion solution 씬 타입(✅ 해결법 배지) 자동 적용
+  반드시 "매달 X만원", "X년이면", "X%만 바꿔도" 등 구체적 수치로 동기부여
+- bg_color: 돈의 심리학 테마 — 골드/다크그린/딥퍼플 계열 (#1a1500, #0d2e1a, #1a0d3e, #2a1500)
+
+장면 구성:
+  장면 1 ( 5초): hook     — 돈 관련 충격 수치. subtitle에 금액/퍼센트/배수 필수
+  장면 2 (10초): problem  — 심리 편향 때문에 가난해지는 이유. 행동경제학 용어 사용
+  장면 3 (12초): numbered — "첫 번째 부자의 비밀:" 구체적 습관이나 심리 전략 + 수치
+  장면 4 (12초): numbered — "두 번째 부자의 비밀:" 행동경제학 연구 결과 또는 투자 원칙
+  장면 5 (12초): numbered — "세 번째 부자의 비밀:" 지금 당장 적용 가능한 실천 방법
+  장면 6 ( 8초): stat     — 핵심 금융 수치 강조. subtitle에 숫자 필수
+  장면 7 ( 8초): quote    — 유명 투자자 실제 명언. 반드시 큰따옴표 사용
+  장면 8 (10초): solution — 오늘부터 할 수 있는 실천법. "매달 X만원", "X년이면" 수치로 동기부여
+  장면 9 ( 8초): closing  — 핵심 메시지 + 동기부여 마무리
+  장면 10( 5초): closing  — 구독/좋아요 CTA + 다음 영상 예고
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (돈의 심리학) ━━━
+공통: 영문 작성, no text, no watermark, no letters, no numbers 항상 포함. 분위기: deep green, gold accent, dark financial aesthetic
+
+⚡ image_prompt 핵심 규칙 (반드시 준수):
+  각 씬의 narration에 등장하는 행동경제학 용어(손실회피/앵커링/복리 등)와 금융 개념·수치를 영문으로 번역해 image_prompt에 반드시 포함할 것.
+  씬 역할(hook/problem/numbered/quote 등)의 금융 미감 + narration 핵심 경제 개념 결합 = 내용과 일치하는 이미지.
+  예: narration "손실회피 편향 — 인간은 같은 금액의 이익보다 손실을 2배 더 강하게 느낀다"
+      → "person clutching gold coins while watching them vanish into darkness, loss aversion 2x pain vs gain psychology, dramatic chiaroscuro, deep green premium background, no text, no letters, no watermark"
+
+장면 1 (hook): narration의 충격 금융 수치를 강렬하게 시각화
+  구도: extreme close-up, single dramatic spotlight, sharp contrast, dark financial aesthetic
+  예: [narration 금융 수치·심리 영문 시각화] gold [관련 오브젝트] in dark void with dramatic spotlight, extreme close-up, premium dark financial, no text, no letters, no watermark
+
+장면 2 (problem): narration의 심리 편향으로 돈을 잃는 상황을 시각화
+  구도: cold dramatic lighting, psychological trap metaphor, dark atmosphere
+  예: [narration 행동경제학 편향 영문] person [편향 상황 시각화] reaching for wealth but [편향 메커니즘 영문], cold dramatic lighting, dark atmosphere, no text, no letters, no watermark
+
+장면 3~5 (numbered): narration에서 설명하는 각 부자의 비밀·투자 원칙을 직접 시각화
+  구도: dark green background, dramatic spotlight, bold symbolic object
+  narration의 금융 전략·심리 원칙을 영문으로 번역해 image_prompt 핵심 요소로 사용할 것
+  예(narration "복리의 힘"): compound interest [기간] gold mountain rising from darkness, exponential growth visualization, gold accent, no text, no letters, no watermark
+  예(narration "손실회피"): loss aversion scale showing pain outweighing gain, psychological weight of loss vs profit, dark dramatic, no text, no letters, no watermark
+  예(narration "앵커링 효과"): price anchor chain binding financial decision, anchoring bias metaphor, sharp contrast, no text, no letters, no watermark
+
+장면 6 (stat): narration의 금융 핵심 수치를 추상 시각화. 숫자·텍스트 없이
+  구도: gold accent, data visualization art, premium aesthetic
+  예: [narration 금융 수치 추상 시각화] abstract financial growth chart as glowing landscape, gold accent light, dark premium, no text, no numbers, no letters, no watermark
+
+장면 7 (quote): narration에서 인용된 투자 거장과 그 철학을 시각화
+  구도: warm lamp, aged premium materials, cinematic close-up
+  예: [인용 인물 관련 상징 — 워런 버핏/찰리 멍거 등] aged leather-bound [관련 오브젝트] representing [인물 투자 철학 영문], warm lamp in dark room, premium cinematic, no text, no letters, no watermark
+
+장면 8 (solution): narration의 재정 실천법을 희망적으로 시각화
+  구도: warm cinematic light, golden path, uplifting
+  예: [narration 실천법 영문 시각화] golden path representing [구체적 재정 방법] emerging from dark forest toward [목표 영문] horizon, warm uplifting, no text, no letters, no watermark
+
+장면 9 (closing): narration 핵심 메시지의 동기부여 마무리
+  구도: dramatic spotlight, symbolic and powerful, dark premium
+  예: [narration 핵심 메시지 영문 시각화] single gold [상징 오브젝트] representing [메시지], dramatic spotlight, dark premium, no text, no letters, no watermark
+
+장면 10 (CTA): 채널 아이덴티티를 담은 강렬한 마무리
+  예: golden key floating above dark background with soft glow, premium minimal dark aesthetic, cinematic finale, no text, no letters, no watermark
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 5,
+      "narration": "나레이션 (자연스러운 구어체, TTS용)",
+      "subtitle": "금액/퍼센트/배수 포함 15자 이내",
+      "image_prompt": "English only. RULE: Translate THIS scene's behavioral economics narration into a concrete financial visual — which specific object/person/metaphor PHYSICALLY represents the psychological or financial concept in the narration. Structure: [Specific financial/psychological subject from narration] + [what is happening/state] + [dark premium financial environment] + [camera angle]. BAD: 'money psychology dark'. GOOD: 'human hand clutching fistful of gold coins while identical coins cascade and evaporate into black void beside them, loss looming twice as large as gain, dramatic low-angle chiaroscuro, deep forest green premium background, macro close-up'. No text, no letters.",
+      "bg_color": "#1a1500"
+    }}
+  ]
+}}

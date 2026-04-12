@@ -1,0 +1,91 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 쇼츠 스크립트를 생성하라. 총 10장면, 90초.
+
+== 카테고리 포맷: 역사 충격 ==
+성공 패턴: 충격 수치 훅 → 통념 반박 problem → numbered 사실 × 3 → stat 수치 → 인물 quote → solution 교훈 → closing
+핵심 규칙:
+- 장면 1 subtitle에 반드시 역사적 수치 포함 (예: "90% 생존", "0.3% 합격", "170cm 실제")
+  → Remotion CountUp 애니메이션이 자동으로 숫자를 카운트업함
+- 장면 2 narration: "영화가 거짓말했다", "교과서엔 없는", "우리가 속았다" 식 통념 반박
+- 장면 3~5 narration에 "첫 번째", "두 번째", "세 번째" 포함
+  → Remotion numbered 씬 타입(원형 숫자 배지) 자동 적용
+- 장면 6 subtitle에 반드시 역사 수치 포함
+  → Remotion stat 씬 타입(📊 통계 배지) 자동 적용
+- 장면 7 narration에 역사 인물의 실제 발언을 큰따옴표("")로 인용
+  → Remotion quote 씬 타입(💬 인용 배지) 자동 적용
+- bg_color: 역사 테마 — 다크 레드/브라운/딥블루 계열 (#1a0a0a, #2a0a0a, #0d1a2e, #2d1b0e)
+
+장면 구성:
+  장면 1 ( 5초): hook     — 충격적 역사 수치. "XX%였습니다", "실제로 Xcm" 형태
+  장면 2 (10초): problem  — 우리가 잘못 알고 있는 통념 지적. 영화/교과서와의 차이
+  장면 3 (12초): numbered — "첫 번째 충격 사실:" 구체적 역사 근거와 수치
+  장면 4 (12초): numbered — "두 번째 충격 사실:" 더 놀라운 숨겨진 배경
+  장면 5 (12초): numbered — "세 번째 충격 사실:" 현재와의 연결 또는 최대 반전
+  장면 6 ( 8초): stat     — 핵심 역사 수치 강조. subtitle에 숫자 필수
+  장면 7 (10초): quote    — 역사적 인물의 실제 발언 인용. 반드시 큰따옴표 사용
+  장면 8 ( 8초): solution — 이 역사에서 현재 우리에게 주는 교훈과 시사점
+  장면 9 ( 8초): closing  — 역사에서 배울 수 있는 교훈 한 문장 + 여운
+  장면 10( 5초): closing  — 구독/좋아요 CTA
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (역사 충격) ━━━
+공통: 영문 작성, no text, no watermark 항상 포함. 분위기: dark crimson, burnt amber, torchlight
+
+⚡ image_prompt 핵심 규칙 (반드시 준수):
+  각 씬의 narration에 등장하는 구체적 역사 사건·인물·수치를 영문으로 번역해 image_prompt에 반드시 포함할 것.
+  씬 역할(hook/problem/numbered 등)의 시대 분위기 + narration 핵심 역사 사실 결합 = 내용과 일치하는 이미지.
+  예: narration "조선 시대 과거 시험 합격률은 단 0.3%였습니다"
+      → "Joseon dynasty civil exam hall with single candle illuminating lone scholar among hundreds of empty seats, 0.3 percent acceptance rate metaphor, dark crimson atmosphere, torchlight, no text, no watermark"
+
+장면 1 (hook): narration의 충격 수치를 역사 시각화. 강렬한 첫 인상
+  구도: extreme dramatic angle, dark crimson atmosphere, hyper-realistic
+  예: [narration 역사 수치·사건 영문 시각화], extreme dramatic angle, dark crimson atmosphere, hyper-realistic, no text, no watermark
+
+장면 2 (problem): narration의 역사 왜곡·통념 반박을 시각화. 균열·반전 이미지
+  구도: dramatic contrast, dark background, cinematic
+  예: [narration 왜곡 상황 영문 시각화] history textbook cracking open with [숨겨진 사실] light inside, dramatic contrast, dark background, no text, no watermark
+
+장면 3~5 (numbered): narration에서 설명하는 각 역사적 사실을 직접 시각화
+  구도: torchlight, dark crimson or burnt amber dramatic lighting
+  narration의 구체적 역사 사건·인물·장소를 영문으로 번역해 image_prompt에 포함할 것
+  예(narration "이순신 장군의 실제 전선 수는..."): [역사 사실 영문 시각화] ancient Korean warship silhouette in dark harbor, torchlight, crimson atmosphere, no text, no watermark
+
+장면 6 (stat): narration의 역사 수치를 추상적으로 시각화. 숫자 텍스트 없이
+  구도: ancient historical data aesthetic, burnt amber light
+  예: [narration 수치 추상 시각화] ancient counting artifacts glowing in dark excavation site, burnt amber light, no text, no watermark
+
+장면 7 (quote): narration에서 인용된 역사 인물과 상황을 시각화. 무게감 있는 이미지
+  구도: single candle, solemn dark atmosphere, cinematic close-up
+  예: [인용 인물 관련 상징물] aged parchment scroll illuminated by single candle in dark solemn atmosphere, cinematic close-up, no text, no watermark
+
+장면 8 (solution): narration의 역사 교훈을 현재와 연결하는 희망적 이미지
+  구도: golden dawn light, cinematic wide, symbolic transition
+  예: [narration 교훈 영문 시각화] bridge connecting ancient ruins to modern [현재 상황], golden dawn light, cinematic wide, no text, no watermark
+
+장면 9 (closing): narration 핵심 메시지의 감성적 마무리. 역사의 무게와 교훈
+  구도: epic cinematic wide, emotional depth
+  예: lone figure [narration 핵심 메시지 시각화] walking toward distant dawn through [역사적 배경], epic cinematic wide, emotional depth, no text, no watermark
+
+장면 10 (CTA): 강렬하고 기억에 남는 역사 상징 이미지
+  예: ancient seal or crest glowing in dark stone, dramatic accent light, premium dark background, cinematic finale, no text, no watermark
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 5,
+      "narration": "나레이션 (자연스러운 구어체, TTS용)",
+      "subtitle": "역사 수치 포함 15자 이내",
+      "image_prompt": "English only. RULE: Translate THIS scene's narration HISTORICAL FACT into a concrete visual — what specific historical scene/object/person physically represents the narration. Structure: [Specific historical subject from narration] + [what is happening] + [historical environment/era] + [camera angle]. BAD: 'historical dark atmosphere'. GOOD: 'Joseon dynasty civil examination hall crammed with thousands of scholars hunched over desks by torchlight, single empty winning seat glowing at center, aerial dramatic angle, dark crimson smoky atmosphere'. No text, no letters.",
+      "bg_color": "#1a0a0a"
+    }}
+  ]
+}}

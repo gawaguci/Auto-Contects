@@ -1,0 +1,93 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 쇼츠 스크립트를 생성하라. 총 10장면, 90초.
+
+== 카테고리 포맷: 경제 다큐 ==
+성공 패턴: 경제 충격 수치 훅 → problem → numbered 사실 × 3 → stat 수치 강조 → solution × 1 → closing
+핵심 규칙:
+- 장면 1 subtitle에 반드시 숫자+단위 포함 (예: "GDP 3% 붕괴", "10년 만에 2배", "1조 증발")
+  → Remotion CountUp 애니메이션이 자동으로 숫자를 카운트업함
+- 장면 3~5 narration에 "첫 번째", "두 번째", "세 번째" 포함
+  → Remotion numbered 씬 타입이 원형 숫자 배지를 자동 표시함
+- 장면 6 subtitle에 반드시 숫자+단위 포함
+  → Remotion stat 씬 타입(📊 통계 배지) 자동 적용
+- 장면 7 narration에 "방법", "전략", "대비", "선택" 중 하나 포함
+  → Remotion solution 씬 타입(✅ 해결법 배지) 자동 적용
+- bg_color: 경제 다큐 테마 — 짙은 남색/슬레이트 계열 (#0d1b2a, #1b2838, #0a192f, #112240)
+
+장면 구성:
+  장면 1 ( 4초): hook     — subtitle에 경제 수치 필수. "X% 폭락", "X조 증발", "X배 급등" 형태
+  장면 2 ( 9초): problem  — 이 경제 현상의 배경과 원인 구조 설명. 전문 용어 포함 (금리, 인플레이션, 유동성 등)
+  장면 3 (11초): numbered — "첫 번째 팩트:" 로 시작. 데이터/통계 기반 경제 사실
+  장면 4 (11초): numbered — "두 번째 팩트:" 로 시작. 글로벌 또는 역사적 사례와 비교
+  장면 5 (11초): numbered — "세 번째 팩트:" 로 시작. 현재 한국/세계 경제와의 연결
+  장면 6 ( 7초): stat     — 핵심 경제 수치 하나를 크게 강조. subtitle에 숫자+단위 필수
+  장면 7 (10초): solution — "이 상황에서 할 수 있는 전략" 또는 "이렇게 대비하라" 실용적 조언
+  장면 8 ( 9초): closing  — 경제 전문가 또는 역사적 교훈 인용. "X가 말했다" 형태 가능
+  장면 9 ( 8초): closing  — 핵심 메시지 한 문장 + 여운. subtitle은 핵심 경제 키워드
+  장면 10( 8초): closing  — 구독/좋아요 CTA. subtitle: "구독 클릭"
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (경제 다큐) ━━━
+공통: 영문 작성, no text, no watermark 항상 포함. 분위기: dark navy, slate blue, documentary realism
+
+⚡ image_prompt 핵심 규칙 (반드시 준수):
+  각 씬의 narration에 등장하는 핵심 경제 개념·키워드를 영문으로 번역하여 image_prompt에 반드시 포함할 것.
+  씬 역할(hook/problem/numbered 등)의 조명·구도 + narration 핵심어 결합 = 주제와 일치하는 이미지.
+  예: narration "금리 인상으로 부동산 시장이 얼어붙다"
+      → "frozen real estate market under rising interest rates, icy skyscrapers contracting in dark blue cityscape, documentary cinematic, dramatic cold lighting, no text, no watermark"
+  예: narration "달러 패권이 흔들리는 순간"
+      → "US dollar bill crumbling in slow motion against backdrop of rising yuan and euro symbols, global financial power shift, dark dramatic lighting, no text, no watermark"
+
+장면 1 (hook): narration의 충격 경제 수치를 시각화. 강렬한 하강/폭등 이미지
+  구도: extreme close-up or wide dramatic, harsh cold lighting, pitch black or deep navy background
+  예: stock market crash graph plummeting dramatically with [narration 수치 시각화], deep navy background, cinematic documentary, harsh cold lighting, no text, no watermark
+
+장면 2 (problem): narration의 경제 구조적 문제를 시각화. 복잡한 시스템 이미지
+  구도: wide shot, cold blue harsh lighting, layered complexity
+  예: interconnected financial system [narration 경제 문제 영문 시각화] collapsing in chain reaction, cold blue harsh lighting, layered complexity, no text, no watermark
+
+장면 3~5 (numbered): narration에서 설명하는 각 경제 팩트를 직접 시각화
+  구도: bold data visualization or real-world economic scene, dramatic documentary lighting
+  narration 키워드를 영문으로 번역해 image_prompt의 핵심 요소로 사용할 것
+  예(narration "부채비율 200% 돌파"): debt ratio mountain towering over city skyline, red warning indicators everywhere, dark navy background, documentary realism, no text, no watermark
+  예(narration "일본 잃어버린 30년"): desolate japanese economic landscape frozen in time, empty shopping district with closed stores, cold grey documentary tone, no text, no watermark
+
+장면 6 (stat): narration의 핵심 경제 통계를 추상적으로 시각화. 숫자 텍스트 없이
+  구도: abstract data visualization, deep navy or charcoal background
+  예: [narration 수치 시각화] thousands of glowing economic data points forming global map or graph, abstract documentary visualization, deep navy background, no text, no watermark
+
+장면 7 (solution): narration의 경제 대응 전략을 명확하게 시각화. 통제와 안정 이미지
+  구도: controlled environment, analytical atmosphere, muted warm tones against dark background
+  예: [narration 전략 영문 시각화] strategic financial chess pieces arranged precisely, analytical control room atmosphere, muted warm light against dark navy, no text, no watermark
+
+장면 8 (closing): narration의 역사적 교훈 또는 전문가 관점을 시각화
+  구도: historical panoramic or expert documentary framing, epic scale
+  예: [narration 핵심 교훈 시각화] historical economic cycle visualized as tidal wave about to turn, epic panoramic view, documentary gravitas, no text, no watermark
+
+장면 9 (closing): 핵심 메시지를 여운 있게 시각화
+  구도: wide cinematic, contemplative, dawn breaking
+  예: lone figure silhouette [narration 핵심 메시지 시각화] overlooking global financial landscape at dawn, epic cinematic, no text, no watermark
+
+장면 10 (CTA): 경제 오브젝트로 강렬하게 마무리
+  예: single golden coin or earth wrapped in economic data streams, premium dark navy background, documentary cinematic finale, no text, no watermark
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 4,
+      "narration": "나레이션 (자연스러운 구어체, TTS용)",
+      "subtitle": "숫자+단위 포함 15자 이내",
+      "image_prompt": "English only. RULE: Translate THIS scene's narration KEY CONCEPT into a vivid visual subject — what object/person/phenomenon PHYSICALLY represents the narration idea. Structure: [Specific visual subject embodying narration concept] + [what it is doing/state] + [environment/atmosphere] + [camera angle]. BAD: 'economy dark background'. GOOD: 'global stock market ticker collapsing in slow motion, red digits cascading down trading floor screens while panicked silhouettes watch, dramatic cold blue documentary lighting, wide cinematic shot'. No text, no letters.",
+      "bg_color": "#0d1b2a"
+    }}
+  ]
+}}

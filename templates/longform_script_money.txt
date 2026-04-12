@@ -1,0 +1,57 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
+
+== 카테고리 포맷: 돈의 심리학 (효기심 다큐 스타일 참조) ==
+벤치마킹 스타일:
+- 금융/경제 관련 실사 영상 배경 (주식 차트, 지폐, 도시 야경)
+- 검정/딥그린 배경 + 큰 흰색 금액/수익률 수치 강조 씬
+- 차트/그래프 이미지에 강조 오버레이
+- "부자들은 알고 있다" "99%가 모르는" 프레임
+- 워런 버핏/투자 거장 명언 인용으로 신뢰도 부여
+- 나레이션: 경제 다큐 해설자 톤, 현실적이고 직접적으로
+
+핵심 규칙:
+- subtitle에 금액/퍼센트/배수 포함 → Remotion CountUp 자동
+- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 자동
+- narration에 큰따옴표 인용 → quote 씬 자동 (투자 거장 명언)
+- narration에 "방법/시작하세요/하면" → solution 씬 자동
+- bg_color: 돈의 심리학 테마 (#020f06, #041a08, #0a1500, #001a0a, #050f02)
+- video_query: 금융/경제 관련 스톡 영상 키워드 (영문)
+  예: "stock market trading", "money cash wealth", "business success city"
+
+장면 구성:
+  장면 1  ( 15초): hook — 돈 관련 충격 수치. subtitle에 금액/퍼센트 필수
+  장면 2  ( 15초): hook_data — 핵심 수치 강조. "X%만 알면 인생이 바뀐다" 톤
+  장면 3  ( 30초): problem — 대부분이 이 심리 편향 때문에 가난해지는 이유
+  장면 4  ( 30초): stat — 빈부격차 또는 금융 관련 충격 통계
+  장면 5  ( 45초): numbered — "첫 번째 비밀:" 부자들의 구체적 심리 전략 + 수치
+  장면 6  ( 45초): numbered — "두 번째 비밀:" 행동경제학 연구 결과
+  장면 7  ( 30초): quote — 워런 버핏/찰리 멍거 등 실제 명언. 큰따옴표 필수
+  장면 8  ( 45초): numbered — "세 번째 비밀:" 복리/투자 원칙 수치로 설명
+  장면 9  ( 45초): numbered — "네 번째 비밀:" 지금 당장 적용 가능한 전략
+  장면 10 ( 30초): stat — 전략 적용 시 기대 수익 수치. subtitle에 숫자 필수
+  장면 11 ( 45초): solution — "오늘부터 시작하는 방법:" 구체적 실천법 + 수치
+  장면 12 ( 30초): quote — 두 번째 투자 거장 명언. 큰따옴표 필수
+  장면 13 ( 30초): closing — 핵심 메시지 + 동기부여 마무리
+  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 영상 예고
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 15,
+      "narration": "나레이션 (경제 다큐 톤, TTS용, 분량에 맞게 충분히)",
+      "subtitle": "금액/퍼센트 포함 15자 이내",
+      "image_prompt": "English background video/image description for stock footage",
+      "video_query": "stock market trading dark green",
+      "bg_color": "#020f06"
+    }}
+  ]
+}}

@@ -1,0 +1,53 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --color-primary-50: #e8f0f8;
+  --color-primary-100: #c8d9ef;
+  --color-primary-200: #a3bee5;
+  --color-primary-300: #80a3d8;
+  --color-primary-400: #638ece;
+  --color-primary-500: #4878c4;
+  --color-primary-600: #3a65b0;
+  --color-primary-700: #2f539c;
+  --color-primary-800: #264388;
+  --color-primary-900: #142660;
+  --color-primary-950: #0a1540;
+  --color-neutral-50: #f7f8fa;
+  --color-neutral-100: #eef0f4;
+  --color-neutral-200: #e1e4ea;
+  --color-neutral-300: #c8cdd8;
+  --color-neutral-400: #a4acbc;
+  --color-neutral-500: #7a8499;
+  --color-neutral-600: #5e6880;
+  --color-neutral-700: #4a5268;
+  --color-neutral-800: #363d52;
+  --color-neutral-900: #222840;
+  --color-neutral-950: #161c30;
+  --color-success: #3a8c5a;
+  --color-warning: #c47a20;
+  --color-error: #c44028;
+  --color-info: #3a78c4;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --radius-none: 0;
+  --radius-tight: 4px;
+  --radius-default: 8px;
+  --radius-loose: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --spacing-0: 0;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+}

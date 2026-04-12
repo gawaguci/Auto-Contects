@@ -1,0 +1,56 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
+
+== 카테고리 포맷: 심리학 (효기심 다큐 스타일 참조) ==
+벤치마킹 스타일:
+- 검정/다크 배경 + 큰 흰색 수치 강조 씬 반복
+- 실사 배경 영상 위에 반투명 자막 박스
+- 씬당 2~5초 빠른 템포 (훅 구간) → 후반부 길어짐
+- 수치/통계는 별도 씬으로 분리해서 크게 강조
+- 나레이션은 구어체, 마치 옆에서 말해주는 친구 같은 톤
+
+핵심 규칙:
+- subtitle에 숫자+단위 포함 시 Remotion CountUp 애니메이션 자동 발동
+- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 배지 자동
+- narration에 "방법/루틴/하세요" → solution 씬 배지 자동
+- narration에 큰따옴표 인용 → quote 씬 배지 자동
+- bg_color: 심리학 다크 테마 (#0d0a1e, #1a0d2e, #0a0a1a, #160b2e, #0f172a)
+- video_query: 씬 분위기에 맞는 스톡 영상 검색 키워드 (영문)
+  예: "brain waves dark", "crowd psychology", "decision making office"
+
+장면 구성:
+  장면 1  ( 15초): hook — 충격 통계 수치로 시작. subtitle에 숫자 필수. 빠르고 강렬하게
+  장면 2  ( 15초): hook_data — 수치만 크게 강조하는 씬. subtitle이 곧 메인 비주얼
+  장면 3  ( 30초): problem — 이 현상이 왜 일어나는지 배경 설명. 심리학 용어 등장
+  장면 4  ( 45초): numbered — "첫 번째 이유:" 핵심 심리 메커니즘 + 연구 결과
+  장면 5  ( 30초): stat — 관련 통계/실험 수치 강조 씬. subtitle에 숫자 필수
+  장면 6  ( 45초): numbered — "두 번째 이유:" 행동경제학적 근거 + 사례
+  장면 7  ( 45초): numbered — "세 번째 이유:" 일상 속 사례로 연결
+  장면 8  ( 30초): quote — 심리학자 또는 철학자 실제 명언. 큰따옴표 필수
+  장면 9  ( 45초): solution — "첫 번째 방법:" 즉시 실천 가능한 구체적 팁
+  장면 10 ( 45초): solution — "두 번째 방법:" 과학적 근거 있는 루틴
+  장면 11 ( 45초): solution — "세 번째 방법:" 장기 습관으로 연결
+  장면 12 ( 30초): stat — 방법 적용 시 기대 효과 수치. subtitle에 숫자 필수
+  장면 13 ( 30초): closing — 핵심 메시지 한 문장 + 감성적 마무리
+  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 영상 예고
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 15,
+      "narration": "나레이션 (구어체, TTS용, 분량에 맞게 충분히)",
+      "subtitle": "숫자+단위 포함 15자 이내",
+      "image_prompt": "English background video/image description for stock footage",
+      "video_query": "dark psychology brain waves",
+      "bg_color": "#0d0a1e"
+    }}
+  ]
+}}

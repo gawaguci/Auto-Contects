@@ -1,0 +1,88 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
+
+== 카테고리 포맷: 경제 다큐 (시사IN/KBS 다큐 스타일 참조) ==
+벤치마킹 스타일:
+- 다크 네이비/슬레이트 배경 + 큰 흰색 경제 수치 강조 씬 반복
+- 실사 배경 영상(거래소, 도시, 차트) 위에 반투명 자막 박스
+- 씬당 15~30초 중간 템포 (경제 다큐 호흡)
+- 수치/통계/그래프는 별도 씬으로 분리해서 크게 강조
+- 나레이션은 권위 있고 분석적이면서도 이해하기 쉬운 구어체
+
+핵심 규칙:
+- subtitle에 숫자+단위 포함 시 Remotion CountUp 애니메이션 자동 발동
+- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 배지 자동
+- narration에 "방법/전략/대비/선택" → solution 씬 배지 자동
+- narration에 큰따옴표 인용 → quote 씬 배지 자동
+- bg_color: 경제 다큐 다크 테마 (#0d1b2a, #0a192f, #112240, #0f1923, #1b2838)
+- video_query: 씬 분위기에 맞는 스톡 영상 검색 키워드 (영문)
+  예: "stock market trading floor", "economic crisis city", "interest rate finance"
+
+장면 구성:
+  장면 1  ( 15초): hook — 충격 경제 수치로 시작. subtitle에 숫자+단위 필수. 강렬하게
+  장면 2  ( 15초): hook_data — 경제 수치만 크게 강조. subtitle이 메인 비주얼
+  장면 3  ( 30초): problem — 이 경제 현상의 구조적 원인 설명. 전문 용어 포함 (금리/인플레이션/유동성)
+  장면 4  ( 45초): numbered — "첫 번째 팩트:" 데이터/통계 기반 핵심 경제 사실
+  장면 5  ( 30초): stat — 관련 경제 통계/지표 강조. subtitle에 숫자 필수
+  장면 6  ( 45초): numbered — "두 번째 팩트:" 글로벌 또는 역사적 사례와 비교
+  장면 7  ( 45초): numbered — "세 번째 팩트:" 현재 한국/세계 경제와의 연결
+  장면 8  ( 30초): quote — 경제학자/투자 전문가/역사 기록 실제 인용. 큰따옴표 필수
+  장면 9  ( 45초): numbered — "네 번째 팩트:" 이 현상의 파급 효과 또는 숨겨진 진실
+  장면 10 ( 45초): numbered — "다섯 번째 팩트:" 앞으로의 시나리오 또는 반전 포인트
+  장면 11 ( 30초): stat — 미래 전망 수치 강조. subtitle에 숫자 필수
+  장면 12 ( 30초): quote — 두 번째 전문가 인용 또는 역사적 교훈. 큰따옴표 필수
+  장면 13 ( 30초): closing — 핵심 메시지 + 감성적 마무리
+  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 경제 영상 예고
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (경제 다큐 롱폼) ━━━
+공통: 영문 작성, no text, no watermark 항상 포함. 분위기: dark navy, cinematic documentary, economic realism
+
+⚡ image_prompt 핵심 규칙 (반드시 준수):
+  각 씬 narration의 핵심 경제 개념을 영문으로 번역하여 image_prompt에 포함할 것.
+  씬 역할 + narration 핵심어 결합 = 경제 주제와 일치하는 다큐멘터리 비주얼.
+
+장면 1~2 (hook/hook_data): 경제 충격 수치 강렬하게 시각화
+  구도: dramatic wide shot or extreme close-up, cold harsh blue lighting, deep navy background
+  예: global stock market crash in slow motion, red digits falling on trading screens, panicked silhouettes, cinematic documentary cold blue lighting, no text, no watermark
+
+장면 3 (problem): 경제 구조적 원인을 복잡하지만 명확하게 시각화
+  구도: layered systems view, interconnected machinery, cold analytical blue
+  예: global financial system as intricate clockwork mechanism failing, gears stopping one by one, dark economic machinery, cold blue analytical lighting, no text, no watermark
+
+장면 4~10 (numbered/stat/quote): narration 핵심 경제 팩트를 직접 시각화
+  구도: bold data visualization, real-world economic scenes, documentary realism
+  narration 키워드 영문 번역 필수. stat 씬은 숫자 텍스트 없이 추상적으로
+  예(numbered "일본 잃어버린 30년"): deserted japanese business district frozen in economic stagnation, cold grey light, documentary realism, no text, no watermark
+  예(stat "부채 GDP 300%"): towering debt mountain dwarfing entire city skyline, dark navy, abstract economic visualization, no text, no watermark
+  예(quote "위기는 기회다"): single spotlight illuminating chess board with precise strategic move in dark economic environment, analytical atmosphere, no text, no watermark
+
+장면 11 (stat): 미래 전망 수치를 희망 또는 경고로 시각화
+  구도: bifurcation point visualization, two paths diverging, dawn or storm
+  예: economic fork in the road visualization, one path glowing gold upward while other descends into storm, epic cinematic, no text, no watermark
+
+장면 13~14 (closing): 핵심 메시지와 마무리 시각화
+  구도: epic panoramic, contemplative, documentary gravitas
+  예: lone figure at crossroads overlooking global economic landscape at dawn, epic cinematic documentary, deep navy to golden horizon, no text, no watermark
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 15,
+      "narration": "나레이션 (분석적이면서 이해하기 쉬운 구어체, TTS용)",
+      "subtitle": "숫자+단위 포함 15자 이내",
+      "image_prompt": "English only. RULE: Translate THIS scene's narration KEY ECONOMIC CONCEPT into a vivid documentary visual — what object/place/phenomenon PHYSICALLY represents the economic idea. Structure: [Specific visual subject embodying economic concept] + [what it is doing/state] + [environment/atmosphere] + [camera angle]. BAD: 'economy dark background'. GOOD: 'global stock market trading floor in freefall, hundreds of red ticker screens reflecting panic on traders faces, dramatic cold blue cinematic documentary, wide establishing shot'. No text, no letters.",
+      "video_query": "economy documentary dark cinematic",
+      "bg_color": "#0d1b2a"
+    }}
+  ]
+}}

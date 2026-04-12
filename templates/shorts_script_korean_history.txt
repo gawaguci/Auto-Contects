@@ -1,0 +1,94 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 쇼츠 스크립트를 생성하라. 총 10장면, 90초.
+
+== 카테고리 포맷: 한국사 X파일 ==
+성공 패턴: 충격 수치 훅 → 역사 왜곡 배경 problem → 숨겨진 사실 numbered × 3 → stat 수치 → 역사 인물 quote → solution 교훈 → closing
+핵심 규칙:
+- 장면 1 subtitle에 반드시 한국사 관련 수치 포함 (예: "0.3% 합격", "13첩 반상", "13년 투쟁")
+  → Remotion CountUp 애니메이션이 자동으로 숫자를 카운트업함
+- 장면 2 narration: "역사가 지워졌다", "식민사관이 숨겼다", "교과서엔 없는" 등으로 문제 제기
+- 장면 3~5 narration에 "첫 번째", "두 번째", "세 번째" 포함
+  → Remotion numbered 씬 타입(원형 숫자 배지) 자동 적용
+- 장면 6 subtitle에 반드시 숫자 포함
+  → Remotion stat 씬 타입(📊 통계 배지) 자동 적용
+- 장면 7 narration에 역사적 인물의 실제 발언이나 기록을 큰따옴표("")로 인용
+  → Remotion quote 씬 타입(💬 인용 배지) 자동 적용
+  추천 인물: 안중근, 세종대왕, 유관순, 이순신, 김구, 고종
+- 장면 9 narration: 민족적 자긍심 또는 안타까움을 자극하는 감성적 마무리 (공유율↑)
+- bg_color: 한국사 테마 — 다크 레드/골드/딥브라운 계열 (#1a0a0a, #2e1a00, #1a1500, #0d0d1a)
+
+장면 구성:
+  장면 1 ( 5초): hook     — 한국사 충격 수치. subtitle에 숫자 필수
+  장면 2 (10초): problem  — 우리가 몰랐던 이유. 역사 왜곡 또는 숨겨진 배경
+  장면 3 (12초): numbered — "첫 번째 숨겨진 사실:" 역사 기록과 구체적 수치
+  장면 4 (12초): numbered — "두 번째 숨겨진 사실:" 더 충격적인 사실 또는 인물 이야기
+  장면 5 (12초): numbered — "세 번째 숨겨진 사실:" 현재와 연결되는 의미 있는 사실
+  장면 6 ( 8초): stat     — 핵심 한국사 수치 강조. subtitle에 숫자 필수
+  장면 7 (10초): quote    — 역사 인물의 실제 발언 또는 기록. 반드시 큰따옴표 사용
+  장면 8 ( 8초): solution — 이 역사에서 현재 우리가 배울 수 있는 교훈과 실천
+  장면 9 ( 8초): closing  — 민족 자긍심 또는 안타까움 자극하는 감성적 마무리
+  장면 10( 5초): closing  — 구독/좋아요 CTA
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (한국사 X파일) ━━━
+공통: 영문 작성, no text, no watermark, no letters, no numbers 항상 포함. 분위기: dark crimson, gold accent, ancient Korean aesthetic
+
+⚡ image_prompt 핵심 규칙 (반드시 준수):
+  각 씬의 narration에 등장하는 한국사 사건·인물·시대·수치를 영문으로 번역해 image_prompt에 반드시 포함할 것.
+  씬 역할(hook/problem/numbered 등)의 한국 전통 미감 + narration 한국사 핵심어 결합 = 내용과 일치하는 이미지.
+  예: narration "조선 과거시험 합격률 0.3% — 수만 명이 응시해 단 33명만 합격"
+      → "Joseon dynasty civil service exam hall with hundreds of scholars in dark candlelit night, single successful scholar in spotlight, overwhelming competition, 0.3 percent metaphor, dark crimson atmosphere, gold accent, no text, no letters, no watermark"
+
+장면 1 (hook): narration의 충격 한국사 수치를 강렬하게 시각화
+  구도: extreme dramatic angle, dark crimson atmosphere, cinematic
+  예: [narration 한국사 수치·사건 영문 시각화], extreme dramatic angle, dark crimson, cinematic, no text, no letters, no watermark
+
+장면 2 (problem): narration의 역사 왜곡·숨겨진 배경을 시각화
+  구도: single torch, dark oppressive atmosphere
+  예: [narration 역사 왜곡 상황 영문] old Korean manuscript being [숨겨진 상황], single torch illuminating fragments, dark oppressive, no text, no letters, no watermark
+
+장면 3~5 (numbered): narration에서 설명하는 각 한국사 숨겨진 사실을 직접 시각화
+  구도: gold accent light, dark crimson or burnt amber cinematic
+  narration의 한국 역사 인물·사건·장소를 영문으로 번역해 image_prompt 핵심 요소로 사용할 것
+  예(narration "안중근 의사의 실제 기록"): Korean independence hero [사건 영문] silhouette in dark fog, gold accent, dramatic cinematic, no text, no letters, no watermark
+  예(narration "세종대왕 훈민정음 창제 비화"): Joseon king in royal chamber surrounded by ancient manuscripts [상황 영문], candlelight, gold and crimson, cinematic, no text, no letters, no watermark
+
+장면 6 (stat): narration의 한국사 수치를 추상적으로 시각화. 숫자·텍스트 없이
+  구도: historical data aesthetic, gold glow
+  예: [narration 수치 추상 시각화] ancient Korean artifacts glowing gold in dark excavation site, historical data aesthetic, no text, no numbers, no letters, no watermark
+
+장면 7 (quote): narration에서 인용된 한국 역사 인물과 그 상황을 시각화
+  구도: single candle, solemn dark atmosphere, cinematic close-up
+  예: [인용 인물 관련 한국 전통 상징물] traditional Korean ink brush and scroll illuminated by single candle, representing [인물·상황 영문], solemn dark, no text, no letters, no watermark
+
+장면 8 (solution): narration의 역사 교훈을 현재와 연결하는 희망적 이미지
+  구도: symbolic transition, dawn light, cinematic
+  예: [narration 교훈 영문] Korean flag emerging from dark historical ruins representing [교훈 내용], golden dawn, symbolic transition, cinematic, no text, no letters, no watermark
+
+장면 9 (closing): narration의 민족 감성·자긍심을 담은 감성적 마무리
+  구도: epic cinematic wide, emotional and patriotic
+  예: [narration 감성 메시지 영문] Korean silhouette against vast golden dawn horizon, epic cinematic wide, emotional depth, no text, no letters, no watermark
+
+장면 10 (CTA): 한국 역사 채널 아이덴티티를 담은 마무리
+  예: ancient Korean royal seal glowing gold in dark stone wall, premium dark background, cinematic finale, no text, no letters, no watermark
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 5,
+      "narration": "나레이션 (자연스러운 구어체, TTS용)",
+      "subtitle": "한국사 수치 포함 15자 이내",
+      "image_prompt": "English only. RULE: Translate THIS scene's Korean history narration into a specific visual — which Korean historical figure/artifact/place/event PHYSICALLY represents the narration moment. Structure: [Specific Korean historical subject from narration] + [what is happening in that moment] + [Korean historical setting/era] + [camera angle]. BAD: 'Korean history dark atmosphere'. GOOD: 'Korean independence fighter Ahn Jung-geun in Harbin prison cell, holding calligraphy brush over aged parchment by candlelight, writing final testament before execution, extreme close-up hands, dramatic single candle, stone cell darkness'. No text, no letters.",
+      "bg_color": "#1a0a0a"
+    }}
+  ]
+}}

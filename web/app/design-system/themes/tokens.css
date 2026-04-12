@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/* ============================================================
+   AUTO CONTENT DESIGN SYSTEM — Token CSS
+   Strategy: Tailwind v4 @theme + CSS custom properties
+   Theme: Light only (no dark mode)
+   ============================================================ */
+
+/* ── Layer order ── */
+@layer base, tokens, components, utilities;
+
+/* ── Step 1: Primitive tokens in @theme
+      Generates Tailwind utility classes:
+      bg-primary-50, text-neutral-900, p-4, rounded-md, etc.
+   ── */
+@theme {
+  /* Primary color scale */
+  --color-primary-50:  oklch(0.95 0.03 250);
+  --color-primary-100: oklch(0.88 0.05 250);
+  --color-primary-200: oklch(0.80 0.07 250);
+  --color-primary-300: oklch(0.73 0.08 250);
+  --color-primary-400: oklch(0.67 0.09 250);
+  --color-primary-500: oklch(0.60 0.10 250);
+  --color-primary-600: oklch(0.53 0.10 250);
+  --color-primary-700: oklch(0.47 0.09 250);
+  --color-primary-800: oklch(0.42 0.08 250);
+  --color-primary-900: oklch(0.28 0.06 250);
+  --color-primary-950: oklch(0.18 0.05 250);
+
+  /* Neutral color scale */
+  --color-neutral-50:  oklch(0.98 0.005 250);
+  --color-neutral-100: oklch(0.94 0.008 250);
+  --color-neutral-200: oklch(0.88 0.008 250);
+  --color-neutral-300: oklch(0.78 0.008 250);
+  --color-neutral-400: oklch(0.65 0.008 250);
+  --color-neutral-500: oklch(0.52 0.008 250);
+  --color-neutral-600: oklch(0.42 0.008 250);
+  --color-neutral-700: oklch(0.34 0.008 250);
+  --color-neutral-800: oklch(0.26 0.008 250);
+  --color-neutral-900: oklch(0.18 0.008 250);
+  --color-neutral-950: oklch(0.13 0.005 250);
+
+  /* State colors */
+  --color-success:     oklch(0.55 0.18 145);
+  --color-success-bg:  oklch(0.94 0.05 145);
+  --color-warning:     oklch(0.65 0.18 75);
+  --color-warning-bg:  oklch(0.95 0.06 75);
+  --color-error:       oklch(0.55 0.22 25);
+  --color-error-bg:    oklch(0.95 0.06 25);
+  --color-info:        oklch(0.55 0.18 250);
+  --color-info-bg:     oklch(0.94 0.04 250);
+
+  /* Spacing scale → p-1 = 4px, p-2 = 8px, ... */
+  --spacing-0:  0px;
+  --spacing-1:  4px;
+  --spacing-2:  8px;
+  --spacing-3:  12px;
+  --spacing-4:  16px;
+  --spacing-5:  20px;
+  --spacing-6:  24px;
+  --spacing-8:  32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+
+  /* Border radius → rounded-tight, rounded-default, etc. */
+  --radius-none:    0px;
+  --radius-tight:   4px;
+  --radius-default: 8px;
+  --radius-loose:   12px;
+  --radius-xl:      16px;
+  --radius-full:    9999px;
+
+  /* Typography */
+  --font-sans: Inter, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.06);
+  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.08);
+  --shadow-lg: 0 8px 24px oklch(0 0 0 / 0.12);
+  --shadow-xl: 0 16px 40px oklch(0 0 0 / 0.16);
+}
+
+/* ── Step 2: Semantic tokens in @layer tokens (light-only, :root)
+      These use var() references and are consumed by components.
+      They do NOT generate utility classes — by design.
+   ── */
+@layer tokens {
+  :root {
+    /* Surface */
+    --surface-default:  var(--color-neutral-50);
+    --surface-raised:   oklch(1 0 0);
+    --surface-overlay:  var(--color-neutral-100);
+    --surface-inverse:  var(--color-neutral-900);
+    --surface-muted:    var(--color-neutral-100);
+
+    /* Text */
+    --text-primary:   var(--color-neutral-900);
+    --text-secondary: var(--color-neutral-500);
+    --text-tertiary:  var(--color-neutral-400);
+    --text-disabled:  var(--color-neutral-300);
+    --text-inverse:   oklch(1 0 0);
+    --text-brand:     var(--color-primary-600);
+
+    /* Border */
+    --border-default: var(--color-neutral-200);
+    --border-strong:  var(--color-neutral-300);
+    --border-subtle:  var(--color-neutral-100);
+    --border-focus:   var(--color-primary-500);
+
+    /* Interactive */
+    --interactive-primary:       var(--color-primary-600);
+    --interactive-primary-hover: var(--color-primary-700);
+    --interactive-primary-active:var(--color-primary-800);
+    --interactive-primary-bg:    var(--color-primary-50);
+    --interactive-primary-text:  var(--color-primary-700);
+
+    /* State */
+    --state-success:     var(--color-success);
+    --state-success-bg:  var(--color-success-bg);
+    --state-warning:     var(--color-warning);
+    --state-warning-bg:  var(--color-warning-bg);
+    --state-error:       var(--color-error);
+    --state-error-bg:    var(--color-error-bg);
+    --state-info:        var(--color-info);
+    --state-info-bg:     var(--color-info-bg);
+  }
+}
+
+/* ── Base reset ── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    background-color: var(--surface-default);
+  }
+
+  body {
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.25;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  a {
+    color: var(--text-brand);
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--interactive-primary-hover);
+  }
+
+  code, kbd, samp, pre {
+    font-family: var(--font-mono);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+  }
+}

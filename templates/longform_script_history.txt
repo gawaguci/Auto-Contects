@@ -1,0 +1,56 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
+
+== 카테고리 포맷: 역사 충격 (효기심 다큐 스타일 직접 참조) ==
+벤치마킹 스타일 (효기심 채널):
+- 실사 역사 영상/사진 배경 + 하단 자막
+- 검정 배경 + 큰 흰색 통계 강조 씬 (예: "생존율 90%")
+- 지도 또는 이미지에 색상 오버레이로 지역/사건 강조
+- 빠른 씬 전환 (2~5초) → 핵심 논증 구간은 길게
+- "우리가 알던 게 틀렸다" 구조 — 통념 → 반박 → 진실 순서
+- 나레이션: 다큐 해설자 톤, 권위 있으면서도 쉬운 구어체
+
+핵심 규칙:
+- subtitle에 역사적 수치 포함 시 Remotion CountUp 자동 발동
+- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 자동
+- narration에 큰따옴표 인용 → quote 씬 자동 (역사 인물 발언)
+- bg_color: 역사 다크 테마 (#1a0505, #0a0a0a, #1c0a00, #0d0500, #180a00)
+- video_query: 씬에 맞는 스톡 영상 키워드 (영문)
+  예: "ancient rome colosseum", "medieval castle", "world war history"
+
+장면 구성:
+  장면 1  ( 15초): hook — 교과서와 다른 충격 수치. subtitle에 숫자 필수. "전부 거짓말입니다" 톤
+  장면 2  ( 15초): hook_data — 핵심 수치만 크게 강조. subtitle이 메인 비주얼
+  장면 3  ( 30초): problem — 우리가 잘못 알고 있는 통념 지적. 영화/교과서와의 차이
+  장면 4  ( 45초): numbered — "첫 번째 충격 사실:" 구체적 역사 근거 + 수치
+  장면 5  ( 30초): stat — 관련 역사 통계/수치 강조. subtitle에 숫자 필수
+  장면 6  ( 45초): numbered — "두 번째 충격 사실:" 더 놀라운 숨겨진 배경
+  장면 7  ( 45초): numbered — "세 번째 충격 사실:" 최대 반전 또는 현재와의 연결
+  장면 8  ( 30초): quote — 역사적 인물의 실제 발언. 큰따옴표 필수
+  장면 9  ( 45초): numbered — "네 번째 충격 사실:" 후속 사건 또는 결과
+  장면 10 ( 45초): numbered — "다섯 번째 충격 사실:" 현대와의 연결고리
+  장면 11 ( 30초): stat — 역사적 영향 수치 강조. subtitle에 숫자 필수
+  장면 12 ( 30초): quote — 역사가 또는 목격자 증언. 큰따옴표 필수
+  장면 13 ( 30초): closing — 역사에서 배울 교훈 + 감성적 마무리
+  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 역사 영상 예고
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 15,
+      "narration": "나레이션 (다큐 해설자 톤, TTS용, 분량에 맞게 충분히)",
+      "subtitle": "역사 수치 포함 15자 이내",
+      "image_prompt": "English background video/image description for stock footage",
+      "video_query": "ancient rome gladiator colosseum",
+      "bg_color": "#1a0505"
+    }}
+  ]
+}}

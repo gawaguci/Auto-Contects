@@ -1,0 +1,91 @@
+카테고리: {category_name} {category_emoji}
+주제: {topic_title}
+후크: {topic_hook}
+키워드: {keywords}
+
+유튜브 쇼츠 스크립트를 생성하라. 총 11장면, 90초.
+
+== 카테고리 포맷: 뇌과학 ==
+성공 패턴: 연구 수치 훅 → problem → numbered 근거 × 3 → stat 수치 → solution 루틴 × 3 → closing
+핵심 규칙:
+- 장면 1 subtitle에 반드시 뇌과학 연구 수치 포함 (예: "47초 집중력", "40% 저하", "8배 향상")
+  → Remotion CountUp 애니메이션이 자동으로 숫자를 카운트업함
+- 장면 2 narration: 도파민/코르티솔/전두엽/해마 등 뇌과학 키워드 반드시 사용
+- 장면 3~5 narration에 "첫 번째", "두 번째", "세 번째" 포함
+  → Remotion numbered 씬 타입(원형 숫자 배지) 자동 적용
+- 장면 6 subtitle에 반드시 숫자+단위 포함
+  → Remotion stat 씬 타입(📊 통계 배지) 자동 적용
+- 장면 7~9 narration에 "방법", "하면 됩니다", "루틴", "습관", "해보세요" 포함
+  → Remotion solution 씬 타입(✅ 해결법 배지) 자동 적용
+  solution에는 "하루 X분", "X일이면", "X주 후" 등 구체적 수치 포함
+- bg_color: 뇌과학 테마 — 딥블루/청록/다크그린 계열 (#0d1a2e, #0d2e1a, #1a2d2e, #0a1a1a)
+
+장면 구성:
+  장면 1 ( 4초): hook     — 뇌과학 연구 수치 충격 훅. subtitle에 숫자 필수
+  장면 2 (10초): problem  — 뇌과학적 원인 설명. 도파민/전두엽 키워드 포함
+  장면 3 (10초): numbered — "첫 번째 근거:" 연구 결과나 실험으로 증명된 사실
+  장면 4 (10초): numbered — "두 번째 근거:" 뇌의 구체적 메커니즘 설명
+  장면 5 (10초): numbered — "세 번째 근거:" 나쁜 습관이 뇌에 미치는 영향 + 수치
+  장면 6 ( 8초): stat     — 뇌과학 핵심 수치 강조. subtitle에 숫자 필수
+  장면 7 (10초): solution — "첫 번째 방법:" 즉시 실천 가능. "하루 X분이면" 수치 포함
+  장면 8 (10초): solution — "두 번째 방법:" 과학적 근거 있는 루틴. "X주면 뇌가" 등
+  장면 9 ( 8초): solution — "세 번째 방법:" 장기 습관으로 뇌 구조 변화
+  장면 10( 5초): closing  — 뇌과학이 증명한 핵심 메시지 한 문장
+  장면 11( 5초): closing  — 구독/좋아요 CTA
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (뇌과학) ━━━
+공통: 영문 작성, no text, no watermark, no letters, no numbers 항상 포함. 분위기: deep blue, teal glow, neural network aesthetic
+
+⚡ image_prompt 핵심 규칙 (반드시 준수):
+  각 씬의 narration에 등장하는 뇌과학 용어(도파민/코르티솔/전두엽/해마 등)와 핵심 개념을 영문으로 번역해 image_prompt에 반드시 포함할 것.
+  씬 역할(hook/problem/numbered/solution 등)의 과학적 시각화 + narration 뇌과학 키워드 결합.
+  예: narration "스마트폰 알림이 도파민 회로를 과자극해 전두엽 기능을 약화시킵니다"
+      → "smartphone notifications hijacking dopamine circuit, prefrontal cortex weakening visualization, neural pathways overstimulated in dark brain scan, cold blue clinical light, no text, no letters, no watermark"
+
+장면 1 (hook): narration의 뇌과학 충격 수치를 과학적으로 시각화
+  구도: extreme close-up, dark background, hyper-realistic scientific art
+  예: human brain cross-section showing [narration 뇌과학 수치·현상 영문 시각화], glowing neural pathways in electric blue, extreme close-up, dark background, no text, no letters, no watermark
+
+장면 2 (problem): narration의 뇌 손상·기능 저하 원인을 시각화
+  구도: cold clinical blue light, abstract neuroscience visualization
+  예: [narration 뇌과학 원인 영문 — 도파민/코르티솔 등] fading away in dark void, cold clinical blue light, no text, no letters, no watermark
+
+장면 3~5 (numbered): narration에서 설명하는 각 뇌과학 근거·메커니즘을 직접 시각화
+  구도: scientific dramatic, dark background, teal or blue accent
+  narration의 뇌 부위(전두엽/해마/편도체 등)와 현상을 영문으로 번역해 image_prompt에 포함할 것
+  예(narration "전두엽이 약화"): prefrontal cortex dimming while [원인] fires in dark brain scan, scientific dramatic, no text, no letters, no watermark
+  예(narration "시냅스 연결 감소"): neural synapse gap with particles failing to cross, cold teal light, abstract scientific, no text, no letters, no watermark
+  예(narration "해마 위축"): brain scan showing atrophied hippocampus from [narration 원인], clinical dark aesthetic, no text, no letters, no watermark
+
+장면 6 (stat): narration의 뇌과학 핵심 수치를 추상 시각화. 숫자·텍스트 없이
+  구도: teal and gold accent, abstract scientific
+  예: [narration 수치 추상 시각화] glowing neural activity heatmap showing [현상], teal and gold accent, abstract scientific, no text, no numbers, no letters, no watermark
+
+장면 7~9 (solution): narration에서 제시하는 뇌 회복·최적화 방법을 희망적으로 시각화
+  구도: warm teal or golden light, uplifting transformation
+  예(narration "명상 10분"): meditation figure with [narration 방법 영문] glowing brain waves emanating outward, soft teal light, calm uplifting, no text, no letters, no watermark
+  예(narration "뉴런 재연결"): brain neurons rewiring and growing new connections representing [narration 실천법], bright teal transformation, no text, no letters, no watermark
+
+장면 10 (closing): narration 핵심 메시지를 여운 있게 시각화
+  예: single glowing neuron representing [narration 핵심 메시지] in vast dark space, symbolic and philosophical, cinematic, no text, no letters, no watermark
+
+장면 11 (CTA): 뇌과학 채널 아이덴티티 마무리
+  예: perfect glowing brain structure in electric blue hovering in dark space, premium scientific aesthetic, cinematic finale, no text, no letters, no watermark
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+JSON만 반환 (다른 텍스트 금지):
+{{
+  "title": "영상 제목 (궁금증 유발, 30자 이내)",
+  "cta": "구독/좋아요 유도 문구",
+  "scenes": [
+    {{
+      "index": 1,
+      "duration": 4,
+      "narration": "나레이션 (자연스러운 구어체, TTS용)",
+      "subtitle": "뇌과학 수치 포함 15자 이내",
+      "image_prompt": "English only. RULE: Translate THIS scene's neuroscience narration into a concrete brain/body visual — which specific brain structure/neurotransmitter/biological process PHYSICALLY shows what the narration describes. Structure: [Specific neural/biological subject from narration] + [what is happening in it] + [scientific/dark environment] + [camera angle]. BAD: 'brain neuroscience dark'. GOOD: 'prefrontal cortex shown as dimming glass structure while dopamine reward pathways fire uncontrollably in electric blue, smartphone notification icons cascading into synaptic gaps causing overload, macro cross-section view, cold clinical blue-teal lighting, dark void background'. No text, no letters.",
+      "bg_color": "#0d1a2e"
+    }}
+  ]
+}}
