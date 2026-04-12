@@ -115,6 +115,8 @@ _IMAGE_STYLE_OPTIONS = [
     "흰 얼굴 캐릭터",
 ]
 
+_PLAYBACK_SPEED_OPTIONS = [30, 20, 15, 10, 0, -10, -20]
+
 
 def _render_mode_label(mode: str) -> str:
     labels = {
@@ -123,6 +125,10 @@ def _render_mode_label(mode: str) -> str:
         "capcut": "캡컷 프로젝트",
     }
     return labels.get(mode, mode)
+
+
+def _playback_speed_label(speed: int) -> str:
+    return f"{speed:+d}%"
 
 
 def _auto_mode(args) -> tuple:
@@ -160,8 +166,70 @@ def _auto_mode(args) -> tuple:
     # 렌더링 방식
     render_mode = args.render  # 'auto' | 'studio' | 'capcut'
 
-    return category, topic, version, language, tts_provider, image_style, render_mode
+    # 영상 재생 속도 (+30, +20, +15, +10, 0, -10, -20)
+    playback_speed = args.playback_speed
 
+    return category, topic, version, language, tts_provider, image_style, render_mode, playback_speed
+
+
+def _load_script_override(script_json_path: Path, category: dict, version: str):
+    """UI에서 편집된 스크립트 JSON을 Script 객체로 로드."""
+    from pipeline.script_gen import Scene, Script
+
+    if not script_json_path.exists():
+        raise FileNotFoundError(f"편집 스크립트 파일이 없습니다: {script_json_path}")
+
+    data = json.loads(script_json_path.read_text(encoding="utf-8"))
+    scenes_data = data.get("scenes")
+    if not isinstance(scenes_data, list) or len(scenes_data) == 0:
+        raise ValueError("편집 스크립트에 scenes가 없습니다.")
+
+    scenes: list[Scene] = []
+    for i, item in enumerate(scenes_data, start=1):
+        if not isinstance(item, dict):
+            continue
+        idx = int(item.get("index", i))
+        narration = str(item.get("narration", "")).strip()
+        subtitle = str(item.get("subtitle", "")).strip()
+        if not narration:
+            raise ValueError(f"scene {idx}: narration이 비어 있습니다.")
+        if not subtitle:
+            subtitle = narration[:15]
+
+        duration_raw = item.get("duration", 6.0)
+        try:
+            duration = max(0.1, float(duration_raw))
+        except Exception:
+            duration = 6.0
+
+        image_prompt = str(item.get("imagePrompt") or item.get("image_prompt") or "").strip()
+        bg_color = str(item.get("bgColor") or item.get("bg_color") or "#101622").strip()
+        video_query = str(item.get("videoQuery") or item.get("video_query") or "").strip()
+
+        scenes.append(
+            Scene(
+                index=idx,
+                duration=duration,
+                narration=narration,
+                subtitle=subtitle,
+                image_prompt=image_prompt,
+                bg_color=bg_color,
+                video_query=video_query,
+            )
+        )
+
+    title = str(data.get("title") or "편집 스크립트")
+    cta = str(data.get("cta") or "")
+    total_duration = round(sum(s.duration for s in scenes), 2)
+
+    return Script(
+        version=version,
+        title=title,
+        category=category["name"],
+        scenes=scenes,
+        total_duration=total_duration,
+        cta=cta,
+    )
 
 def main():
     """메인 CLI 흐름."""
@@ -183,12 +251,14 @@ def main():
     parser.add_argument("--tts", type=str, default="edge-tts", choices=["edge-tts", "elevenlabs", "typecast"])
     parser.add_argument("--image-style", type=int, default=0, dest="image_style")
     parser.add_argument("--render", type=str, default="auto", choices=["auto", "studio", "capcut"])
+    parser.add_argument("--playback-speed", type=int, default=0, choices=_PLAYBACK_SPEED_OPTIONS, dest="playback_speed")
+    parser.add_argument("--script-json", type=str, default="", dest="script_json")
     args = parser.parse_args()
     use_legacy = args.legacy
 
     if args.auto:
         # === 자동 모드 (Web UI / AI 대화 모드) ===
-        category, topic, version, language, tts_provider, image_style, render_mode = _auto_mode(args)
+        category, topic, version, language, tts_provider, image_style, render_mode, playback_speed = _auto_mode(args)
         print()
         print("=" * 50)
         print(f"  YouTube 영상 자동화 파이프라인 [AUTO]")
@@ -196,7 +266,8 @@ def main():
         print(f"  카테고리: {category['emoji']} {category['name']}")
         print(f"  주제: {topic.title}")
         print(f"  버전: {version} / 언어: {language} / TTS: {tts_provider}")
-        print(f"  이미지 스타일: {image_style} / 렌더: {_render_mode_label(render_mode)}")
+        speed_label = _playback_speed_label(playback_speed) if render_mode != "capcut" else "해당 없음 (캡컷)"
+        print(f"  이미지 스타일: {image_style} / 렌더: {_render_mode_label(render_mode)} / 재생속도: {speed_label}")
         print()
     else:
         print()
@@ -277,16 +348,36 @@ def main():
         # === 렌더링 방식 선택 ===
         if not use_legacy:
             print("=== 렌더링 방식 ===")
-            print("  1. \u26a1 자동 렌더링 (Remotion \u2192 mp4 파일) \u2190 기본")
-            print("  2. \U0001f3db  Remotion Studio (직접 렌더링)")
-            print("  3. \u2702\ufe0f 캡컷 프로젝트 (Remotion 렌더 없음)")
+            print("  1. ⚡ 자동 렌더링 (Remotion → mp4 파일) ← 기본")
+            print("  2. 🏛  Remotion Studio (직접 렌더링)")
+            print("  3. ✂️ 캡컷 프로젝트 (Remotion 렌더 없음)")
             print()
             render_idx = _select_number("선택 (엔터=1): ", 1, 3, default=1)
             render_mode = "auto" if render_idx == 1 else "studio" if render_idx == 2 else "capcut"
             render_label = _render_mode_label(render_mode)
-            print(f"\n  \u279c {render_label} 선택됨\n")
+            print(f"\n  ➜ {render_label} 선택됨\n")
+
+            if render_mode in ("auto", "studio"):
+                print("=== 영상 재생 속도 ===")
+                print("  1. +30%")
+                print("  2. +20%")
+                print("  3. +15%")
+                print("  4. +10%")
+                print("  5. 0% ← 기본")
+                print("  6. -10%")
+                print("  7. -20%")
+                print()
+                speed_idx = _select_number("선택 (엔터=5): ", 1, 7, default=5)
+                playback_speed = _PLAYBACK_SPEED_OPTIONS[speed_idx - 1]
+                print(f"\n  ➜ 재생 속도 {_playback_speed_label(playback_speed)} 선택됨\n")
+            else:
+                playback_speed = 0
+                print("  ➜ 캡컷 모드에서는 재생 속도 조정을 적용하지 않습니다.\n")
         else:
             render_mode = "auto"
+            playback_speed = 0
+    if use_legacy or render_mode == "capcut":
+        playback_speed = 0
 
     # === 파이프라인 실행 ===
     job_id = _next_job_id(config.OUTPUT_DIR)
@@ -309,6 +400,8 @@ def main():
         "job_id": job_id,
         "pid": os.getpid(),
         "started_at": _now_iso(),
+        "render_mode": render_mode,
+        "playback_speed": playback_speed,
     }
     current_step = "초기화"
     completed_steps = 0
@@ -331,11 +424,19 @@ def main():
         current_step = "스크립트 생성"
         set_status("running")
         from pipeline.script_gen import generate_script
-        script = _run_step(
-            1, total_steps,
-            f"\U0001f4dd 스크립트 생성 중",
-            generate_script, topic, category, version, 2, language,
-        )
+        if args.script_json:
+            script = _run_step(
+                1, total_steps,
+                "📝 편집 스크립트 로드 중",
+                _load_script_override, Path(args.script_json), category, version,
+            )
+            print(f"     편집 스크립트: {Path(args.script_json).name}")
+        else:
+            script = _run_step(
+                1, total_steps,
+                f"📝 스크립트 생성 중",
+                generate_script, topic, category, version, 2, language,
+            )
         completed_steps = 1
         video_filename = build_video_filename(script.title)
         output_video_hint = video_filename if render_mode != "capcut" else None
@@ -345,7 +446,7 @@ def main():
         # [2] TTS 음성 생성
         current_step = "TTS 음성 생성"
         set_status("running", output_video=output_video_hint, render_mode=render_mode)
-        from pipeline.tts_gen import generate_tts, _generate_subtitles
+        from pipeline.tts_gen import generate_tts, _generate_subtitles, apply_playback_speed
         script = _run_step(
             2, total_steps,
             f"\U0001f399\ufe0f  TTS 음성 생성 중 ({tts_provider})",
@@ -356,7 +457,15 @@ def main():
         rate = category["shorts_rate"] if version == "shorts" else category["longform_rate"]
         print(f"     {tts_provider} / {script.total_duration:.1f}초")
 
-        # 자막 파일 생성 (TTS 완료 직후 — 타이밍 기반)
+        if (not use_legacy) and render_mode in ("auto", "studio") and playback_speed != 0:
+            script = _run_step(
+                2, total_steps,
+                f"🎚️ 재생 속도 조정 중 ({_playback_speed_label(playback_speed)})",
+                apply_playback_speed, script, job_dir, playback_speed,
+            )
+            print(f"     재생 속도 적용: {_playback_speed_label(playback_speed)}")
+
+        # 자막 파일 생성 (TTS/속도 보정 완료 후 — 타이밍 기반)
         _generate_subtitles(script, job_dir)
 
         if use_legacy:

@@ -1,4 +1,4 @@
-"""Web UI용 카테고리 주제 목록 조회."""
+"""Web UI용 카테고리 주제 목록 조회 + 프롬프트 정보."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ import json
 import sys
 
 import config
+import pipeline.topic_gen as topic_gen
 from pipeline.topic_gen import generate_topics
 
 
@@ -30,7 +31,7 @@ def main() -> int:
         return 2
 
     topics = generate_topics(category)
-    payload = [
+    topic_items = [
         {
             "index": t.index,
             "title": t.title,
@@ -40,6 +41,20 @@ def main() -> int:
         }
         for t in topics
     ]
+
+    template_path = config.TEMPLATES_DIR / "topic_search_prompt.txt"
+    template_text = template_path.read_text(encoding="utf-8") if template_path.exists() else ""
+    rendered_prompt = topic_gen._load_user_prompt(category)
+
+    payload = {
+        "topics": topic_items,
+        "prompt": {
+            "system": topic_gen._SYSTEM_PROMPT,
+            "template_file": template_path.name,
+            "template_text": template_text,
+            "rendered_prompt": rendered_prompt,
+        },
+    }
     print(json.dumps(payload, ensure_ascii=False))
     return 0
 

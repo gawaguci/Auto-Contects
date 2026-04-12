@@ -13,18 +13,29 @@ interface StatusFilePayload {
   step?: string
   output_video?: string
   error?: string
+  updated_at?: string
+  progress?: {
+    current?: number
+    total?: number
+  }
 }
 
 export interface Job {
   id: string
+  pid: number | null
   mtime: number
   status: JobStatus
   hasThumbnail: boolean
+  hasOutputVideo: boolean
   outputVideoFile: string | null
   step: string | null
   title: string | null
   category: string | null
   typeLabel: string | null
+  error: string | null
+  updatedAt: string | null
+  progressCurrent: number | null
+  progressTotal: number | null
 }
 
 function normalizeStatus(value: string | undefined): JobStatus | null {
@@ -126,14 +137,20 @@ export async function getJobs(limit?: number): Promise<Job[]> {
 
       jobs.push({
         id: entry.name,
+        pid: typeof statusFile?.pid === 'number' ? statusFile.pid : null,
         mtime: s.mtimeMs,
         status,
         hasThumbnail,
+        hasOutputVideo: hasVideo,
         outputVideoFile: outputVideoFile ?? statusFile?.output_video ?? null,
         step: typeof statusFile?.step === 'string' ? statusFile.step : null,
         title: metaTitle ?? remotionTitle,
         category,
         typeLabel,
+        error: typeof statusFile?.error === 'string' ? statusFile.error : null,
+        updatedAt: typeof statusFile?.updated_at === 'string' ? statusFile.updated_at : null,
+        progressCurrent: typeof statusFile?.progress?.current === 'number' ? statusFile.progress.current : null,
+        progressTotal: typeof statusFile?.progress?.total === 'number' ? statusFile.progress.total : null,
       })
     }
 
@@ -143,3 +160,4 @@ export async function getJobs(limit?: number): Promise<Job[]> {
     return []
   }
 }
+

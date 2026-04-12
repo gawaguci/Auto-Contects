@@ -15,7 +15,7 @@ Auto-Contects/
 ├── _topics_for_ui.py         # 웹UI용 주제 생성 헬퍼
 ├── config.py                 # 카테고리/보이스/스타일 등 모든 설정값
 ├── requirements.txt          # Python 의존성
-├── .env                      # API 키 (Gemini, ElevenLabs 등)
+├── .env                      # API 키 (Gemini, ElevenLabs, Typecast 등)
 │
 ├── pipeline/                 # 파이프라인 모듈
 │   ├── topic_gen.py          # 주제 생성
@@ -23,7 +23,7 @@ Auto-Contects/
 │   ├── metadata_gen.py       # 메타데이터 생성 (제목/태그/해시태그)
 │   ├── image_gen.py          # 배경 이미지 생성 (Gemini AI)
 │   ├── stock_image.py        # 스톡 이미지 수집 (Pexels/Pixabay)
-│   ├── tts_gen.py            # TTS 음성 생성 (edge-tts / ElevenLabs)
+│   ├── tts_gen.py            # TTS 음성 생성 (edge-tts / ElevenLabs / Typecast)
 │   ├── remotion_render.py    # Remotion 렌더링
 │   ├── video_build.py        # 영상 빌드 조율
 │   ├── capcut_project.py     # 캡컷 프로젝트 생성
@@ -88,7 +88,7 @@ Auto-Contects/
 | ② 주제 생성/선택 | 주제 5개 자동 생성 후 선택 |
 | ③ 영상 버전 선택 | 쇼츠(90초) / 롱폼(10분) |
 | ④ 언어 선택 | 한국어 / 영어 |
-| ⑤ TTS 공급자 선택 | edge-tts (무료) / ElevenLabs (유료) |
+| ⑤ TTS 공급자 선택 | edge-tts (무료) / ElevenLabs (유료) / Typecast (유료) |
 | ⑥ 이미지 스타일 선택 | 시네마틱 실사 / 수채화 / 카툰 / 애니메이션 / 유화 / 연필 스케치 / 커스텀 등 |
 | ⑦ 렌더링 방식 선택 | 자동 렌더링 / Remotion Studio / 캡컷 프로젝트 |
 | ⑧ 스크립트 생성 | 카테고리 템플릿 기반 10장면 생성 |
@@ -150,3 +150,4 @@ PIXABAY_API_KEY=...
 ```bash
 pip install -r requirements.txt
 ```
+

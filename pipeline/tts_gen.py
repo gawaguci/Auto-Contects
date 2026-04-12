@@ -249,6 +249,63 @@ def generate_tts(
     return script
 
 
+def apply_playback_speed(script: Script, job_dir: Path, speed_percent: int) -> Script:
+    """생성된 TTS 오디오의 재생 속도를 조정하고 duration을 재계산한다.
+
+    Args:
+        script: duration이 채워진 Script
+        job_dir: output/{job_id}
+        speed_percent: +30, +20, +15, +10, 0, -10, -20
+    """
+    if speed_percent == 0:
+        return script
+
+    if not shutil.which("ffmpeg"):
+        print("    ffmpeg가 없어 재생 속도 조정을 건너뜁니다.")
+        return script
+
+    speed_ratio = 1.0 + (speed_percent / 100.0)
+    if speed_ratio <= 0:
+        raise ValueError(f"유효하지 않은 재생 속도: {speed_percent}")
+
+    audio_dir = job_dir / "audio"
+    if not audio_dir.exists():
+        raise FileNotFoundError(f"오디오 폴더가 없습니다: {audio_dir}")
+
+    mp3_files = sorted(audio_dir.glob("*.mp3"))
+    if not mp3_files:
+        raise FileNotFoundError(f"속도 조정 대상 mp3가 없습니다: {audio_dir}")
+
+    for src in mp3_files:
+        tmp = src.with_name(f"{src.stem}.speed.tmp.mp3")
+        cmd = [
+            "ffmpeg", "-y",
+            "-i", str(src),
+            "-filter:a", f"atempo={speed_ratio:.4f}",
+            "-vn",
+            str(tmp),
+        ]
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        if result.returncode != 0 or not tmp.exists():
+            err = (result.stderr or "")[-300:]
+            raise RuntimeError(f"재생 속도 조정 실패 ({src.name}): {err}")
+        tmp.replace(src)
+
+    for scene in script.scenes:
+        scene_audio = audio_dir / f"scene_{scene.index:02d}.mp3"
+        if scene_audio.exists():
+            scene.duration = round(get_audio_duration(scene_audio), 2)
+
+    script.total_duration = round(sum(s.duration for s in script.scenes), 2)
+    return script
+
+
 def _format_srt_time(seconds: float) -> str:
     """초를 SRT 타임코드로 변환. 예: 00:00:05,430"""
     h = int(seconds // 3600)
@@ -347,3 +404,5 @@ def _generate_subtitles(script: "Script", job_dir: Path) -> None:
     vtt_path.write_text("\n".join(vtt_lines), encoding="utf-8")
 
     print(f"    자막: {srt_path.name} / {vtt_path.name} ({entry_idx - 1}개 항목)")
+
+

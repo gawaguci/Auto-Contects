@@ -4,19 +4,11 @@ import path from 'path'
 
 const PIPELINE_ROOT = path.resolve(process.cwd(), '..')
 
-interface TopicItem {
-  index: number
-  title: string
-  hook: string
-  trend: string
-  keywords: string[]
-}
-
-interface TopicPromptInfo {
-  system: string
-  template_file: string
-  template_text: string
-  rendered_prompt: string
+interface ScriptPreviewRequest {
+  categoryId: number
+  topic: string
+  type: 'shorts' | 'longform'
+  language: 'ko' | 'en'
 }
 
 function runPython(args: string[]): Promise<{ code: number | null; stdout: string; stderr: string }> {
@@ -48,58 +40,66 @@ function runPython(args: string[]): Promise<{ code: number | null; stdout: strin
   })
 }
 
-function parseTopicStdout(stdout: string): { topics: TopicItem[]; prompt: TopicPromptInfo | null } {
+function parseStdout(stdout: string): { script: unknown; prompt: unknown } {
   const lines = stdout
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean)
+
   if (lines.length === 0) {
     throw new Error('빈 응답')
   }
 
-  // 로깅이 섞인 경우 마지막 줄(JSON) 우선
   const jsonLine = lines[lines.length - 1]
-  const parsed = JSON.parse(jsonLine) as unknown
+  const parsed = JSON.parse(jsonLine) as { script?: unknown; prompt?: unknown }
 
-  if (Array.isArray(parsed)) {
-    return { topics: parsed as TopicItem[], prompt: null }
+  if (!parsed || typeof parsed !== 'object' || !parsed.script) {
+    throw new Error('script 응답 형식이 올바르지 않습니다.')
   }
 
-  if (typeof parsed === 'object' && parsed !== null) {
-    const obj = parsed as { topics?: TopicItem[]; prompt?: TopicPromptInfo }
-    if (Array.isArray(obj.topics)) {
-      return { topics: obj.topics, prompt: obj.prompt ?? null }
-    }
-  }
-
-  throw new Error('topics 응답 형식이 올바르지 않습니다.')
+  return { script: parsed.script, prompt: parsed.prompt ?? null }
 }
 
-export async function GET(req: NextRequest) {
-  const raw = req.nextUrl.searchParams.get('categoryId')
-  const categoryId = Number(raw)
+export async function POST(req: NextRequest) {
+  let body: ScriptPreviewRequest
+  try {
+    body = await req.json() as ScriptPreviewRequest
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+  }
+
+  const { categoryId, topic, type, language } = body
   if (!Number.isInteger(categoryId) || categoryId < 1) {
     return NextResponse.json({ error: 'Invalid categoryId' }, { status: 400 })
   }
+  if (!topic || !topic.trim()) {
+    return NextResponse.json({ error: 'Invalid topic' }, { status: 400 })
+  }
 
-  const result = await runPython(['_topics_for_ui.py', `--category=${categoryId}`])
+  const result = await runPython([
+    '_script_preview_for_ui.py',
+    `--category=${categoryId}`,
+    `--topic=${topic}`,
+    `--type=${type === 'longform' ? 'longform' : 'shorts'}`,
+    `--language=${language === 'en' ? 'en' : 'ko'}`,
+  ])
+
   if (result.code !== 0) {
     const reason = result.stderr.trim() || result.stdout.trim() || 'unknown error'
     return NextResponse.json(
-      { error: `주제 생성 실패: ${reason}` },
+      { error: `스크립트 프리뷰 생성 실패: ${reason}` },
       { status: 500 },
     )
   }
 
   try {
-    const parsed = parseTopicStdout(result.stdout)
-    return NextResponse.json({ ok: true, topics: parsed.topics, prompt: parsed.prompt })
+    const parsed = parseStdout(result.stdout)
+    return NextResponse.json({ ok: true, script: parsed.script, prompt: parsed.prompt })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'JSON 파싱 실패'
     return NextResponse.json(
-      { error: `주제 응답 파싱 실패: ${message}` },
+      { error: `스크립트 프리뷰 응답 파싱 실패: ${message}` },
       { status: 500 },
     )
   }
 }
-

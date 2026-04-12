@@ -101,9 +101,13 @@ export default async function JobsPage() {
                           {job.title ?? '—'}
                         </td>
                         <td className="px-4 py-3">
-                          {job.outputVideoFile
-                            ? <span style={{ color: 'var(--state-success)' }}>✓ {job.outputVideoFile}</span>
-                            : <span style={{ color: 'var(--text-disabled)' }}>—</span>}
+                          {job.hasOutputVideo ? (
+                            <span style={{ color: 'var(--state-success)' }}>✓ {job.outputVideoFile ?? 'output.mp4'}</span>
+                          ) : job.outputVideoFile ? (
+                            <span style={{ color: 'var(--text-tertiary)' }}>예정: {job.outputVideoFile}</span>
+                          ) : (
+                            <span style={{ color: 'var(--text-disabled)' }}>—</span>
+                          )}
                         </td>
                         <td className="px-4 py-3">
                           {job.hasThumbnail
