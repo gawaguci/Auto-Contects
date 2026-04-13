@@ -5,52 +5,81 @@
 
 유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
 
-== 카테고리 포맷: 돈의 심리학 (효기심 다큐 스타일 참조) ==
-벤치마킹 스타일:
-- 금융/경제 관련 실사 영상 배경 (주식 차트, 지폐, 도시 야경)
-- 검정/딥그린 배경 + 큰 흰색 금액/수익률 수치 강조 씬
-- 차트/그래프 이미지에 강조 오버레이
-- "부자들은 알고 있다" "99%가 모르는" 프레임
-- 워런 버핏/투자 거장 명언 인용으로 신뢰도 부여
-- 나레이션: 경제 다큐 해설자 톤, 현실적이고 직접적으로
+== 카테고리 포맷: 돈의 심리학 (부자의경제학 채널 스타일) ==
 
-핵심 규칙:
-- subtitle에 금액/퍼센트/배수 포함 → Remotion CountUp 자동
-- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 자동
-- narration에 큰따옴표 인용 → quote 씬 자동 (투자 거장 명언)
-- narration에 "방법/시작하세요/하면" → solution 씬 자동
-- bg_color: 돈의 심리학 테마 (#020f06, #041a08, #0a1500, #001a0a, #050f02)
-- video_query: 금융/경제 관련 스톡 영상 키워드 (영문)
-  예: "stock market trading", "money cash wealth", "business success city"
+━━━ 나레이션 스타일 규칙 ━━━
 
-장면 구성:
-  장면 1  ( 15초): hook — 돈 관련 충격 수치. subtitle에 금액/퍼센트 필수
-  장면 2  ( 15초): hook_data — 핵심 수치 강조. "X%만 알면 인생이 바뀐다" 톤
-  장면 3  ( 30초): problem — 대부분이 이 심리 편향 때문에 가난해지는 이유
-  장면 4  ( 30초): stat — 빈부격차 또는 금융 관련 충격 통계
-  장면 5  ( 45초): numbered — "첫 번째 비밀:" 부자들의 구체적 심리 전략 + 수치
-  장면 6  ( 45초): numbered — "두 번째 비밀:" 행동경제학 연구 결과
-  장면 7  ( 30초): quote — 워런 버핏/찰리 멍거 등 실제 명언. 큰따옴표 필수
-  장면 8  ( 45초): numbered — "세 번째 비밀:" 복리/투자 원칙 수치로 설명
-  장면 9  ( 45초): numbered — "네 번째 비밀:" 지금 당장 적용 가능한 전략
-  장면 10 ( 30초): stat — 전략 적용 시 기대 수익 수치. subtitle에 숫자 필수
-  장면 11 ( 45초): solution — "오늘부터 시작하는 방법:" 구체적 실천법 + 수치
-  장면 12 ( 30초): quote — 두 번째 투자 거장 명언. 큰따옴표 필수
-  장면 13 ( 30초): closing — 핵심 메시지 + 동기부여 마무리
-  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 영상 예고
+✅ 필수:
+  - 1인칭 대화체 존댓말: "~거든요", "~예요", "~겁니다"
+  - 오프닝: 구체적 일상/금융 장면 묘사
+  - "부자들은 이걸 알고 있습니다" 프레임
+  - 수치+맥락 필수, 워런 버핏/찰리 멍거 명언 인용
+  - 한국 금융 현실과 연결
+  - 클리프행어, 실천 가능한 구체적 방법으로 마무리
+
+❌ 절대 금지:
+  - 막연한 조언 ("절약하세요", "투자하세요" 수준)
+  - 수치 없이 형식만 채우기
+
+━━━ 장면 구성 (총 14장면, 540초) ━━━
+
+  장면 1  (20초): hook     — 돈 관련 충격 수치 오프닝. subtitle에 금액/퍼센트 필수
+  장면 2  (20초): hook     — 이 현상의 충격 확장. "X%만 알면 인생이 바뀐다" 톤
+  장면 3  (30초): problem  — 심리 편향 때문에 가난해지는 구조 설명
+  장면 4  (40초): numbered — "첫 번째 비밀:" 부자들의 심리 전략 + 수치
+  장면 5  (30초): stat     — 빈부격차 또는 금융 충격 통계. subtitle에 숫자 필수
+  장면 6  (40초): numbered — "두 번째 비밀:" 행동경제학 연구 결과
+  장면 7  (30초): stat     — 복리/투자 수익 수치. subtitle에 숫자 필수
+  장면 8  (40초): numbered — "세 번째 비밀:" 복리/투자 원칙 수치로 설명
+  장면 9  (40초): numbered — "네 번째 비밀:" 지금 당장 적용 가능한 전략
+  장면 10 (30초): stat     — 전략 적용 시 기대 수익. subtitle에 숫자 필수
+  장면 11 (40초): solution — 오늘부터 시작하는 방법. "매달 X만원", "X년이면" 수치
+  장면 12 (30초): solution — 두 번째 실천법 + 투자 거장 명언
+  장면 13 (25초): closing  — 핵심 메시지 + 동기부여 마무리
+  장면 14 (25초): closing  — 구독/좋아요 CTA + 댓글 유도
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (돈의 심리학 롱폼 16:9) ━━━
+
+공통 규칙:
+  - 영문 작성, no text, no watermark 항상 포함
+  - 흰 둥근 머리 no-face 캐릭터 (white round head faceless character) 포함
+  - 배경: 금융가, 사무실, 주식 거래소, 고급 인테리어 등
+  - 16:9 가로 구도
+  - 분위기: deep green, gold accent, dark financial premium
+
+씬별 가이드:
+  장면 1~2 (hook): 돈/금융 충격 시각화
+    - white faceless character reacting to financial data/money
+    - 배경: 은행, 증권사, 도심 금융가
+
+  장면 3~5 (problem/stat): 심리 편향·수치 시각화
+    - stat 씬: 캐릭터가 차트/그래프 가리키는 구도
+    - split-screen: 가난한 습관 vs 부자 습관 대조
+
+  장면 6~10 (numbered/stat): 각 비밀 직접 시각화
+    - narration 행동경제학 용어 영문 번역 필수
+    - 복리, 투자, 절약, 자산 증가 등 시각적으로
+
+  장면 11~12 (solution): 희망적·능동적 분위기
+    - 캐릭터가 서류/투자 앱을 들고 자신감 있는 자세
+
+  장면 13~14 (closing): 동기부여 마무리
+
+bg_color 가이드: #020f06, #041a08, #0a1500, #001a0a, #050f02
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 JSON만 반환 (다른 텍스트 금지):
 {{
   "title": "영상 제목 (궁금증 유발, 30자 이내)",
-  "cta": "구독/좋아요 유도 문구",
+  "cta": "구독/좋아요 유도 문구 (존댓말, 댓글 유도 포함)",
   "scenes": [
     {{
       "index": 1,
-      "duration": 15,
-      "narration": "나레이션 (경제 다큐 톤, TTS용, 분량에 맞게 충분히)",
+      "duration": 20,
+      "narration": "나레이션 — 1인칭 대화체 존댓말, 금융 장면 묘사, 수치+맥락, TTS용",
       "subtitle": "금액/퍼센트 포함 15자 이내",
-      "image_prompt": "English background video/image description for stock footage",
-      "video_query": "stock market trading dark green",
+      "image_prompt": "English only. white round head faceless character(s) + financial realistic background. RULE: Translate THIS scene's behavioral economics narration into a concrete financial visual. Structure: [financial setting matching narration] + [white faceless character reaction/action] + [dark premium financial atmosphere]. No text, no watermark.",
       "bg_color": "#020f06"
     }}
   ]

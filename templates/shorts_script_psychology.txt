@@ -5,7 +5,17 @@
 
 유튜브 쇼츠 스크립트를 생성하라. 총 10장면, 90초.
 
-== 카테고리 포맷: 심리학 ==
+== 카테고리 포맷: 심리학 (오늘은심리학 채널 스타일) ==
+
+━━━ 나레이션 스타일 ━━━
+✅ 필수:
+  - 1인칭 구어체 존댓말: "~거든요", "~겠죠", "~니까요", "~거죠"
+  - 구체적 일상/실험 장면 묘사로 시작 ("어떤 실험이 있었어요. 참가자들에게...")
+  - 심리학 개념을 일상 비유로: ("뇌는 마치 GPS처럼 에너지를 아끼려 하거든요")
+  - 수치 앞에 맥락: "흥미로운 연구 결과가 있는데요." → 수치
+  - 공감 유도: "여러분도 이런 경험 해보신 적 있으신가요?"
+❌ 절대 금지: 강의/뉴스 말투, 수치 없이 형식만 채우기
+
 성공 패턴: 숫자 통계 훅 → problem → numbered 이유 × 3 → stat 수치 강조 → solution × 2 → closing
 핵심 규칙:
 - 장면 1 subtitle에 반드시 숫자+단위 포함 (예: "73% 모른다", "2배 더 강해", "47초밖에")
@@ -30,8 +40,12 @@
   장면 9 (10초): closing  — 핵심 메시지 한 문장 + 여운. subtitle은 주제 핵심어
   장면 10( 8초): closing  — 구독/좋아요 CTA. subtitle: "구독 클릭"
 
-━━━ image_prompt 씬별 Gemini 최적화 가이드 (심리학) ━━━
-공통: 영문 작성, no text, no watermark 항상 포함. 분위기: deep purple, dark navy, violet glow
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (심리학 쇼츠 9:16) ━━━
+공통: 영문 작성, no text, no watermark 항상 포함
+  - 흰 둥근 머리 no-face 캐릭터 (white round head faceless character) 포함
+  - 9:16 세로 구도 (vertical portrait format)
+  - 상단 1/4은 제목 배너 공간 — 캐릭터와 핵심 요소를 화면 중하단에 배치
+  - 분위기: deep purple, dark navy, violet glow
 
 ⚡ image_prompt 핵심 규칙 (반드시 준수):
   각 씬의 narration에 등장하는 핵심 개념·키워드를 영문으로 번역하여 image_prompt에 반드시 포함할 것.
@@ -83,7 +97,7 @@ JSON만 반환 (다른 텍스트 금지):
       "duration": 4,
       "narration": "나레이션 (자연스러운 구어체, TTS용)",
       "subtitle": "숫자+단위 포함 15자 이내",
-      "image_prompt": "English only. RULE: Translate THIS scene's narration KEY CONCEPT into a vivid visual subject — what object/person/phenomenon PHYSICALLY represents the narration idea. Structure: [Specific visual subject embodying narration concept] + [what it is doing/state] + [environment/atmosphere] + [camera angle]. BAD: 'psychology concept dark background'. GOOD: 'glowing human brain split in half, left side firing bright synapses while right side dims into shadow, representing cognitive bias filtering reality, pitch black void, extreme macro close-up'. No text, no letters.",
+      "image_prompt": "English only. vertical 9:16 portrait format. white round head faceless character + realistic/abstract background. RULE: Translate THIS scene's narration KEY PSYCHOLOGY CONCEPT into a vivid vertical visual. Structure: [specific visual subject from narration] + [white faceless character emotional reaction] + [atmosphere matching psychology theme — deep purple/navy] + [9:16 vertical composition — character in middle-lower area]. No text, no letters, no watermark.",
       "bg_color": "#1a1a2e"
     }}
   ]

@@ -5,7 +5,17 @@
 
 유튜브 쇼츠 스크립트를 생성하라. 총 10장면, 90초.
 
-== 카테고리 포맷: 돈의 심리학 ==
+== 카테고리 포맷: 돈의 심리학 (부자의경제학 채널 스타일) ==
+
+━━━ 나레이션 스타일 ━━━
+✅ 필수:
+  - 1인칭 대화체 존댓말: "~거든요", "~예요", "~겁니다"
+  - 오프닝: 구체적 금융/일상 장면 묘사로 시작
+  - "부자들은 이걸 알고 있습니다" 프레임
+  - 수치+맥락 필수 (워런 버핏/찰리 멍거 명언, 한국 금융 현실 연결)
+  - 클리프행어, 실천 가능한 구체적 방법으로 마무리
+❌ 절대 금지: 막연한 조언("절약하세요"), 수치 없이 형식만 채우기
+
 성공 패턴: 충격 수치 훅 → 심리 편향 problem → 부자 습관 numbered × 3 → stat 수치 → 투자자 명언 quote → 실천법 solution → closing
 핵심 규칙:
 - 장면 1 subtitle에 반드시 금액/퍼센트/배수 포함 (예: "복리 72의 법칙", "손실 2배 강해", "20% 저축")
@@ -35,8 +45,12 @@
   장면 9 ( 8초): closing  — 핵심 메시지 + 동기부여 마무리
   장면 10( 5초): closing  — 구독/좋아요 CTA + 다음 영상 예고
 
-━━━ image_prompt 씬별 Gemini 최적화 가이드 (돈의 심리학) ━━━
-공통: 영문 작성, no text, no watermark, no letters, no numbers 항상 포함. 분위기: deep green, gold accent, dark financial aesthetic
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (돈의 심리학 쇼츠 9:16) ━━━
+공통: 영문 작성, no text, no watermark, no letters, no numbers 항상 포함
+  - 흰 둥근 머리 no-face 캐릭터 (white round head faceless character) 포함
+  - 9:16 세로 구도 (vertical portrait format)
+  - 상단 1/4은 제목 배너 공간 — 캐릭터와 핵심 요소를 화면 중하단에 배치
+  - 분위기: deep green, gold accent, dark financial aesthetic
 
 ⚡ image_prompt 핵심 규칙 (반드시 준수):
   각 씬의 narration에 등장하는 행동경제학 용어(손실회피/앵커링/복리 등)와 금융 개념·수치를 영문으로 번역해 image_prompt에 반드시 포함할 것.
@@ -90,7 +104,7 @@ JSON만 반환 (다른 텍스트 금지):
       "duration": 5,
       "narration": "나레이션 (자연스러운 구어체, TTS용)",
       "subtitle": "금액/퍼센트/배수 포함 15자 이내",
-      "image_prompt": "English only. RULE: Translate THIS scene's behavioral economics narration into a concrete financial visual — which specific object/person/metaphor PHYSICALLY represents the psychological or financial concept in the narration. Structure: [Specific financial/psychological subject from narration] + [what is happening/state] + [dark premium financial environment] + [camera angle]. BAD: 'money psychology dark'. GOOD: 'human hand clutching fistful of gold coins while identical coins cascade and evaporate into black void beside them, loss looming twice as large as gain, dramatic low-angle chiaroscuro, deep forest green premium background, macro close-up'. No text, no letters.",
+      "image_prompt": "English only. vertical 9:16 portrait format. white round head faceless character + financial realistic background. RULE: Translate THIS scene's behavioral economics narration into a concrete vertical visual. Structure: [financial/psychological subject from narration] + [white faceless character reaction/action] + [dark premium financial atmosphere — deep green/gold] + [9:16 vertical composition — character in middle-lower area]. No text, no letters, no watermark.",
       "bg_color": "#1a1500"
     }}
   ]

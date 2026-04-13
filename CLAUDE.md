@@ -30,7 +30,7 @@
 - ⑥ 이미지 스타일 질문도 직접 입력 방식으로 묻는다.  
   `이미지 스타일을 직접 입력해주세요 (번호 또는 이름): 0 화풍 없음, 1 시네마틱 실사, 2 수채화, 3 카툰/만화, 4 애니메이션, 5 유화, 6 연필 스케치, 7 흰 얼굴 캐릭터, 8 커스텀 직접 입력`
 - ⑦ 렌더링 방식 질문도 직접 입력 방식으로 묻는다.  
-  `렌더링 방식을 직접 입력해주세요 (번호 또는 이름): 1 자동 렌더링, 2 Remotion Studio, 3 캡컷 프로젝트, 4 Remotion 고속 모드`
+  `렌더링 방식을 직접 입력해주세요 (번호 또는 이름): 1 자동 렌더링, 2 Remotion Studio, 3 캡컷 프로젝트`
 - topic_override.json / script_override.json 등 파일 주입으로 순서를 바꾸는 편법 금지
 - 사용자 명시적 지시 없이는 절대 순서 변경 금지
 - "형들 잠깐만 들어봐" 등 타 채널 저작권 문구 사용 금지
@@ -143,4 +143,55 @@ END
 - 참조 파일: `ref/ref_subtitle_style.mp4` (경제 편의점 채널)
 - 자막: 흰색 텍스트 + 검은 외곽선, 배경 없음, 44px
 - 캐릭터: 흰 둥근 머리 no-face 캐릭터 → 이미지 스타일 7번 선택
+
+---
+
+## 씬 role별 Remotion 시각 효과 매핑 (VideoComposition.tsx 기준)
+
+레퍼런스 분석(부자의경제학, 경제사냥꾼, 오늘은심리학 채널)을 통해 확정된 role → 기법 대응표.
+스크립트 생성 시 각 장면의 role을 이 규칙에 맞게 설정해야 Remotion이 자동으로 올바른 효과를 적용한다.
+
+### [공통 — 모든 씬]
+| 기법 | 설명 |
+|------|------|
+| KenBurns | 배경 이미지 줌인/아웃 (hook/problem: 줌인, solution/closing: 줌아웃) |
+| WipeEdge | 씬 시작 시 0.14초 흰 수직선 플래시 — 장면 전환 명확화 |
+| Gradient | 하단 80% 다크 오버레이 (자막 가독성) |
+| HandShake | hook/problem 씬에서 X축 미세 흔들림 (긴장감) |
+
+### [숏폼 전용 — isShorts = height > width]
+| role | 기법 | 설명 | 레퍼런스 |
+|------|------|------|---------|
+| hook~solution | ShortsTitleBanner | 상단 고정 2줄 제목 (1줄: #00FF88, 2줄: 흰색) | 경제사냥꾼, 20260411-2 |
+| all | SrtLine (outline only) | 자막: 흰색 텍스트 + 검은 외곽선만, 박스 없음 | 모든 쇼츠 레퍼런스 |
+| hook (숫자 있음) | StatBox | 수치 카운트업 박스 (숏폼은 이미지 baked가 기본, StatBox 보조) | 경제사냥꾼 |
+
+### [롱폼 전용 — isLongform = width > height]
+| role | 기법 | 설명 | 레퍼런스 |
+|------|------|------|---------|
+| hook, stat (숫자 있음) | StatBox | 어두운 박스 + 컬러 테두리 + 카운트업 수치 | 부자의경제학 14번 |
+| numbered | ContextLabel (원형 배지) | 좌상단 씬번호 원형 컬러 배지 슬라이드인 | 부자의경제학 14번 |
+| problem, stat | ContextLabel (키워드 박스) | 좌상단 subtitle 핵심어 다크박스 + 컬러 테두리 슬라이드인 | 부자의경제학 14번 |
+| hook, problem, solution | FloatingWords | 배경 반투명 감정 키워드 부유 (hook: 충격/반전/진실, problem: 불안감/위기/변화, solution: 해결책/기회/전략) | 부자의경제학 15번 |
+| closing | CtaOverlay | 구독/좋아요/댓글 원형 버튼 오버레이 | 부자의경제학 채널 |
+| stat (숫자 없거나 짧은 problem) | SrtLine (impact box) | 자막: 검은 반투명 박스 + 흰 굵은 텍스트 | 부자의경제학 14번 |
+| 그 외 | SrtLine (outline) | 자막: 흰색 + 검은 외곽선 | 기본 |
+
+### image_prompt 생성 규칙 (레퍼런스 분석 기반)
+- **split-screen (2~3패널 분할)**: image_prompt에 "split screen showing [A] on left, [B] on right" 패턴 사용
+  → Gemini가 분할 구도로 생성 — Remotion에서 별도 처리 불필요 (baked)
+  → numbered/stat 씬에서 "통념 vs 진실", "기관A | 기관B | 기관C" 비교 시 활용
+- **캐릭터 표정/행동**: "white round head faceless character looking shocked/worried/confident"로 구체화
+- **숫자 텍스트 in 이미지**: "monitor showing X%" 패턴으로 배경 이미지에 수치 포함 유도
+  → StatBox가 Remotion 오버레이로 카운트업하므로 이미지 내 수치는 보조적 역할
+
+### 나레이션 → role 자동 분류 규칙
+```
+"첫 번째", "두 번째", ..., "다섯 번째"  →  role: numbered
+숫자+단위 subtitle (5조, 47%, 13.2%)  →  role: stat  (StatBox 발동)
+"방법", "루틴", "해보세요", "시작하세요"  →  role: solution
+"오늘 영상", "구독", "좋아요", "댓글"  →  role: closing
+"연구", "실험", "통계", "밝혀졌습니다"  →  role: hook (첫 2장면)
+그 외  →  role: problem
+```
 

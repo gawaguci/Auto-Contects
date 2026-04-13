@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+import os
 import re
+import sys
 import time
 from dataclasses import dataclass, field
 
@@ -26,6 +28,7 @@ class Scene:
     image_prompt: str     # 영문 이미지 프롬프트
     bg_color: str         # hex 색상코드
     video_query: str = "" # 스톡 영상/이미지 검색 키워드 (영문)
+    role: str = ""        # hook/problem/numbered/stat/solution/closing
 
 
 @dataclass
@@ -352,6 +355,7 @@ def _generate_script_local(
                 image_prompt=_local_image_prompt(category["name"], role, topic.title, keyword),
                 bg_color=_role_color(role),
                 video_query=_local_video_query(category["name"], role, keyword),
+                role=role,
             )
         )
 
@@ -366,6 +370,107 @@ def _generate_script_local(
         total_duration=total_duration,
         cta="Subscribe for the next video." if language == "en" else "구독하고 다음 영상도 확인하세요.",
     )
+
+
+def _generate_script_via_claude_cli(
+    topic: TopicItem,
+    category: dict,
+    version: str,
+    expected_scenes: int,
+    min_duration: float,
+    max_duration: float,
+    language: str,
+) -> Script | None:
+    """claude --print CLI를 subprocess로 호출해 고품질 스크립트 생성.
+
+    USE_CLAUDE_API=0 환경에서 Claude Code 자체(저)를 AI로 활용.
+    프롬프트는 stdin으로 전달해 Windows 인코딩 문제 완전 우회.
+    실패 시 None 반환 → 호출자가 local fallback 처리.
+    """
+    import shutil
+    import subprocess as _sp
+
+    claude_bin = shutil.which("claude")
+    if not claude_bin:
+        return None
+
+    user_prompt = _load_user_prompt(topic, category, version, language)
+    full_prompt = f"{_SYSTEM_PROMPT}\n\n{user_prompt}"
+
+    try:
+        si = None
+        cf = 0
+        if os.name == "nt":
+            si = _sp.STARTUPINFO()
+            si.dwFlags |= _sp.STARTF_USESHOWWINDOW
+            si.wShowWindow = _sp.SW_HIDE
+            cf = _sp.CREATE_NO_WINDOW
+
+        # 프롬프트를 stdin으로 전달 — CLI 인자로 넘기면 Windows cp949에서 깨짐
+        result = _sp.run(
+            [claude_bin, "--print", "--output-format", "text"],
+            input=full_prompt,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=300,
+            startupinfo=si,
+            creationflags=cf,
+            env={**os.environ, "PYTHONIOENCODING": "utf-8"},
+        )
+
+        if result.returncode != 0 or not result.stdout.strip():
+            sys.stdout.buffer.write(
+                f"  claude CLI 스크립트 생성 실패 (rc={result.returncode})\n".encode("utf-8")
+            )
+            return None
+
+        output = result.stdout.strip()
+
+        # 마크다운 코드블록 제거
+        output = re.sub(r"^```(?:json)?\s*", "", output)
+        output = re.sub(r"\s*```$", "", output)
+        output = output.strip()
+
+        # JSON 추출
+        data = _extract_json_object(output)
+
+        scenes = []
+        total_scenes = len(data.get("scenes", []))
+        for item in data.get("scenes", []):
+            idx = item.get("index", len(scenes) + 1)
+            role = str(item.get("role", _role_for_index(idx, total_scenes)))
+            scenes.append(Scene(
+                index=idx,
+                duration=float(item.get("duration", 6)),
+                narration=item.get("narration", ""),
+                subtitle=_trim_subtitle(item.get("subtitle", "")),
+                image_prompt=item.get("image_prompt", ""),
+                bg_color=item.get("bg_color", _role_color(role)),
+                video_query=item.get("video_query", ""),
+                role=role,
+            ))
+
+        if not scenes:
+            return None
+
+        _adjust_durations(scenes, min_duration, max_duration)
+
+        return Script(
+            version=version,
+            title=data.get("title", topic.title),
+            category=category["name"],
+            scenes=scenes,
+            total_duration=round(sum(s.duration for s in scenes), 1),
+            cta=data.get("cta", "구독하고 다음 영상도 확인하세요." if language == "ko" else "Subscribe for more."),
+        )
+
+    except Exception as e:
+        sys.stdout.buffer.write(
+            f"  claude CLI 스크립트 생성 예외: {e}\n".encode("utf-8", errors="replace")
+        )
+        return None
 
 
 def generate_script(
@@ -389,7 +494,20 @@ def generate_script(
     expected_scenes, min_duration, max_duration, structure = _resolve_scene_settings(category, version)
 
     if not config.allow_claude_api():
-        print("  로컬 AI 모드 - API 스크립트 생성을 사용하지 않습니다.")
+        print("  로컬 AI 모드 - Claude Code CLI로 스크립트 생성 시도...")
+        script = _generate_script_via_claude_cli(
+            topic=topic,
+            category=category,
+            version=version,
+            expected_scenes=expected_scenes,
+            min_duration=min_duration,
+            max_duration=max_duration,
+            language=language,
+        )
+        if script is not None:
+            print(f"  Claude Code CLI 스크립트 생성 완료: {len(script.scenes)}장면")
+            return script
+        print("  Claude Code CLI 실패 - 로컬 템플릿으로 폴백")
         return _generate_script_local(
             topic=topic,
             category=category,

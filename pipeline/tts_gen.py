@@ -24,6 +24,17 @@ _FFMPEG_FALLBACK_DIRS = [
 ]
 
 
+def _run_hidden(cmd: list, **kwargs):
+    """Windows에서 콘솔 창이 뜨지 않도록 subprocess.run을 래핑한다."""
+    if os.name == "nt":
+        si = subprocess.STARTUPINFO()
+        si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        si.wShowWindow = subprocess.SW_HIDE
+        kwargs.setdefault("startupinfo", si)
+        kwargs.setdefault("creationflags", subprocess.CREATE_NO_WINDOW)
+    return subprocess.run(cmd, **kwargs)
+
+
 def _resolve_binary(name: str) -> str | None:
     """실행 파일 경로를 결정한다 (PATH + Windows 기본 경로)."""
     env_keys = [f"{name.upper()}_BIN"]
@@ -162,7 +173,7 @@ def get_audio_duration(path: Path) -> float:
     # 1. ffprobe (ffmpeg 설치된 환경)
     ffprobe_bin = _resolve_binary("ffprobe")
     if ffprobe_bin:
-        result = subprocess.run(
+        result = _run_hidden(
             [ffprobe_bin, "-v", "quiet", "-print_format", "json", "-show_format", str(path)],
             capture_output=True, text=True, encoding="utf-8", errors="replace",
         )
@@ -192,7 +203,7 @@ def _concat_audio_files(audio_files: list[Path], output_path: Path) -> None:
         with open(list_file, "w", encoding="utf-8") as f:
             for audio in audio_files:
                 f.write(f"file '{audio.resolve()}'\n")
-        result = subprocess.run(
+        result = _run_hidden(
             [ffmpeg_bin, "-y", "-f", "concat", "-safe", "0", "-i", str(list_file), "-c", "copy", str(output_path)],
             capture_output=True, text=True, encoding="utf-8", errors="replace",
         )
@@ -325,15 +336,17 @@ def apply_playback_speed(script: Script, job_dir: Path, speed_percent: int) -> S
             "-vn",
             str(tmp),
         ]
-        result = subprocess.run(
+        result = _run_hidden(
             cmd,
             capture_output=True,
             text=True,
             encoding="utf-8",
             errors="replace",
         )
-        if result.returncode != 0 or not tmp.exists():
-            err = (result.stderr or "")[-300:]
+        # ffmpeg는 경고 메시지가 있어도 exit code 1을 리턴하는 경우가 있음
+        # 파일 생성 여부를 우선 기준으로 삼고, 파일이 없을 때만 오류 처리
+        if not tmp.exists() or tmp.stat().st_size == 0:
+            err = (result.stderr or result.stdout or "ffmpeg 오류")[-500:]
             raise RuntimeError(f"재생 속도 조정 실패 ({src.name}): {err}")
         tmp.replace(src)
 

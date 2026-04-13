@@ -25,6 +25,7 @@ const defaultInput: RemotionInput = {
       bgColor: '#1a1a2e',
       bgImage: '',
       audioFile: '',
+      role: '',
     },
   ],
   subtitles: [],

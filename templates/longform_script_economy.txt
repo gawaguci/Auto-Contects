@@ -5,83 +5,92 @@
 
 유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
 
-== 카테고리 포맷: 경제 다큐 (시사IN/KBS 다큐 스타일 참조) ==
-벤치마킹 스타일:
-- 다크 네이비/슬레이트 배경 + 큰 흰색 경제 수치 강조 씬 반복
-- 실사 배경 영상(거래소, 도시, 차트) 위에 반투명 자막 박스
-- 씬당 15~30초 중간 템포 (경제 다큐 호흡)
-- 수치/통계/그래프는 별도 씬으로 분리해서 크게 강조
-- 나레이션은 권위 있고 분석적이면서도 이해하기 쉬운 구어체
+== 카테고리 포맷: 경제 다큐 (부자의경제학 채널 스타일) ==
 
-핵심 규칙:
-- subtitle에 숫자+단위 포함 시 Remotion CountUp 애니메이션 자동 발동
-- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 배지 자동
-- narration에 "방법/전략/대비/선택" → solution 씬 배지 자동
-- narration에 큰따옴표 인용 → quote 씬 배지 자동
-- bg_color: 경제 다큐 다크 테마 (#0d1b2a, #0a192f, #112240, #0f1923, #1b2838)
-- video_query: 씬 분위기에 맞는 스톡 영상 검색 키워드 (영문)
-  예: "stock market trading floor", "economic crisis city", "interest rate finance"
+━━━ 벤치마킹: 부자의경제학 채널 나레이션 패턴 ━━━
 
-장면 구성:
-  장면 1  ( 15초): hook — 충격 경제 수치로 시작. subtitle에 숫자+단위 필수. 강렬하게
-  장면 2  ( 15초): hook_data — 경제 수치만 크게 강조. subtitle이 메인 비주얼
-  장면 3  ( 30초): problem — 이 경제 현상의 구조적 원인 설명. 전문 용어 포함 (금리/인플레이션/유동성)
-  장면 4  ( 45초): numbered — "첫 번째 팩트:" 데이터/통계 기반 핵심 경제 사실
-  장면 5  ( 30초): stat — 관련 경제 통계/지표 강조. subtitle에 숫자 필수
-  장면 6  ( 45초): numbered — "두 번째 팩트:" 글로벌 또는 역사적 사례와 비교
-  장면 7  ( 45초): numbered — "세 번째 팩트:" 현재 한국/세계 경제와의 연결
-  장면 8  ( 30초): quote — 경제학자/투자 전문가/역사 기록 실제 인용. 큰따옴표 필수
-  장면 9  ( 45초): numbered — "네 번째 팩트:" 이 현상의 파급 효과 또는 숨겨진 진실
-  장면 10 ( 45초): numbered — "다섯 번째 팩트:" 앞으로의 시나리오 또는 반전 포인트
-  장면 11 ( 30초): stat — 미래 전망 수치 강조. subtitle에 숫자 필수
-  장면 12 ( 30초): quote — 두 번째 전문가 인용 또는 역사적 교훈. 큰따옴표 필수
-  장면 13 ( 30초): closing — 핵심 메시지 + 감성적 마무리
-  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 경제 영상 예고
+✅ 문체 규칙 (반드시 준수):
+  - 1인칭 대화체 존댓말: "~거든요", "~예요", "~겁니다", "~거죠"
+  - 오프닝: 구체적 장면 묘사로 시작 ("어느 날 아침, 한 남성이...", "2025년 X월, 금융당국은...")
+  - 수치 앞에 맥락 부여: "유의미한 숫자가 있는데요." → 수치 제시
+  - 한국 연결 고리 필수: 해외 사례 → "그리고 이게 지금 한국으로 향하고 있습니다"
+  - 비유 적극 사용: 추상 개념을 일상 언어로 ("큰 배가 방향을 바꾸려면 관성 때문에...")
+  - 클리프행어: 각 장면 끝을 다음 장면이 궁금하게 마무리 ("왜 그랬을까요?", "그런데 여기서 이상한 점이 있어요.")
+  - 공감 유도 마무리: "여러분은 어떤 생각이 드셨나요?" + 댓글 유도
 
-━━━ image_prompt 씬별 Gemini 최적화 가이드 (경제 다큐 롱폼) ━━━
-공통: 영문 작성, no text, no watermark 항상 포함. 분위기: dark navy, cinematic documentary, economic realism
+❌ 절대 금지:
+  - 뉴스 앵커 말투 (격식체 보고문 스타일)
+  - "이 요소가 결과를 크게 바꿉니다" 같은 공허한 문장
+  - 실제 수치 없이 형식만 채우는 행위
+  - "첫 번째 이유는~" 나열식 강의 톤 (numbered 씬 외에는 금지)
 
-⚡ image_prompt 핵심 규칙 (반드시 준수):
-  각 씬 narration의 핵심 경제 개념을 영문으로 번역하여 image_prompt에 포함할 것.
-  씬 역할 + narration 핵심어 결합 = 경제 주제와 일치하는 다큐멘터리 비주얼.
+━━━ 장면 구성 (총 14장면, 540초) ━━━
 
-장면 1~2 (hook/hook_data): 경제 충격 수치 강렬하게 시각화
-  구도: dramatic wide shot or extreme close-up, cold harsh blue lighting, deep navy background
-  예: global stock market crash in slow motion, red digits falling on trading screens, panicked silhouettes, cinematic documentary cold blue lighting, no text, no watermark
+  장면 1  (20초): hook     — 구체적 장면 묘사로 오프닝. 충격 수치 또는 사건 제시.
+                             "지금부터 드릴 이야기는 단순한 경제 뉴스가 아닙니다" 톤.
+                             subtitle에 핵심 수치 필수 (StatBox 카운트업 발동)
+  장면 2  (25초): problem  — 왜 이 일이 벌어졌는지 배경 설명. 구조적 원인.
+                             좌상단 키워드 레이블 발동용 핵심어를 subtitle에 포함
+  장면 3  (30초): problem  — 더 깊은 원인 분석. 역사적 맥락 또는 글로벌 비교.
+  장면 4  (40초): numbered — "첫 번째로 짚어야 할 건" → 핵심 팩트 1. 구체적 데이터 포함
+  장면 5  (30초): stat     — 가장 충격적인 수치 1개 강조. subtitle에 숫자+단위 필수
+  장면 6  (40초): numbered — "두 번째" → 핵심 팩트 2. 글로벌/역사 사례 비교
+  장면 7  (40초): numbered — "세 번째" → 핵심 팩트 3. 현재 한국/세계와 직접 연결
+  장면 8  (35초): stat     — 두 번째 핵심 수치. subtitle에 숫자+단위 필수
+  장면 9  (40초): numbered — "네 번째" → 파급 효과 또는 숨겨진 진실
+  장면 10 (40초): numbered — "다섯 번째" → 반전 포인트 또는 앞으로의 시나리오
+  장면 11 (30초): solution — 개인이 지금 취할 수 있는 실용적 대응. 막연한 조언 금지
+  장면 12 (30초): solution — 사회/구조적 차원의 변화 방향 제시
+  장면 13 (25초): closing  — 감성적 마무리. "도쿄의 아침..." 처럼 오프닝 장면 회귀하며 여운
+  장면 14 (25초): closing  — 구독/좋아요/댓글 CTA. "여러분은 어떤 생각이 드셨나요?" 포함
 
-장면 3 (problem): 경제 구조적 원인을 복잡하지만 명확하게 시각화
-  구도: layered systems view, interconnected machinery, cold analytical blue
-  예: global financial system as intricate clockwork mechanism failing, gears stopping one by one, dark economic machinery, cold blue analytical lighting, no text, no watermark
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (경제 다큐 롱폼 16:9) ━━━
 
-장면 4~10 (numbered/stat/quote): narration 핵심 경제 팩트를 직접 시각화
-  구도: bold data visualization, real-world economic scenes, documentary realism
-  narration 키워드 영문 번역 필수. stat 씬은 숫자 텍스트 없이 추상적으로
-  예(numbered "일본 잃어버린 30년"): deserted japanese business district frozen in economic stagnation, cold grey light, documentary realism, no text, no watermark
-  예(stat "부채 GDP 300%"): towering debt mountain dwarfing entire city skyline, dark navy, abstract economic visualization, no text, no watermark
-  예(quote "위기는 기회다"): single spotlight illuminating chess board with precise strategic move in dark economic environment, analytical atmosphere, no text, no watermark
+공통 규칙:
+  - 영문 작성, no text, no watermark 항상 포함
+  - 흰 둥근 머리 no-face 캐릭터 (white round head faceless character) 1~3명 포함
+  - 배경: 실사 장소 (은행 내부, 도심, 사무실, 금융가) + 캐릭터 합성
+  - 16:9 가로 구도
 
-장면 11 (stat): 미래 전망 수치를 희망 또는 경고로 시각화
-  구도: bifurcation point visualization, two paths diverging, dawn or storm
-  예: economic fork in the road visualization, one path glowing gold upward while other descends into storm, epic cinematic, no text, no watermark
+씬별 가이드:
+  장면 1~2 (hook/problem): 충격적이고 구체적인 현장 분위기
+    - 구조: [실사 현장 배경] + white round head faceless character reacting with shock/worry + [씬 분위기]
+    - 배경 예: "bank branch interior with 'loan suspended' sign", "financial district at dusk with falling numbers"
+    - split-screen 가능: 좌우 2패널로 대조 상황 표현 (레퍼런스 스타일)
 
-장면 13~14 (closing): 핵심 메시지와 마무리 시각화
-  구도: epic panoramic, contemplative, documentary gravitas
-  예: lone figure at crossroads overlooking global economic landscape at dawn, epic cinematic documentary, deep navy to golden horizon, no text, no watermark
+  장면 3~5 (problem/stat): 경제 구조·수치 시각화
+    - 수치가 이미지 내 박스(화면 속 모니터/전광판)에 표시되도록 유도
+    - 예: "large monitor screen showing [수치] on wall behind character"
+    - stat 씬: 캐릭터가 차트/그래프를 가리키는 구도
+
+  장면 6~10 (numbered): 각 팩트를 직접 시각화
+    - 각 씬 narration 핵심 경제 개념을 영문으로 번역해 image_prompt 핵심어로 사용
+    - 2~3분할 split-screen 적극 활용 (레퍼런스 14번 스타일: 금융감독원|새마을금고|행정안전부)
+    - 예: "split screen showing [상황A] on left and [상황B] on right, white faceless characters in each panel"
+
+  장면 11~12 (solution): 희망적·능동적 분위기
+    - 캐릭터가 서류/스마트폰을 들고 결정하는 장면
+    - 배경: 밝은 실내, 공공기관 로비, 현대적 사무공간
+
+  장면 13~14 (closing): 여운 있는 마무리
+    - 도심 전경 + 캐릭터 1명이 걷거나 스마트폰 보는 장면
+    - closing 씬: 마지막은 밝고 희망적 톤으로 전환
+
+bg_color 가이드: #0d1b2a, #0a192f, #112240, #0f1923, #1b2838
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 JSON만 반환 (다른 텍스트 금지):
 {{
-  "title": "영상 제목 (궁금증 유발, 30자 이내)",
-  "cta": "구독/좋아요 유도 문구",
+  "title": "영상 제목 (궁금증 유발 + 한국 연결, 30자 이내. 예: '일본이 10년 걸린 일을 한국은 7년에 했다')",
+  "cta": "구독/좋아요 유도 문구 (존댓말, 댓글 유도 포함)",
   "scenes": [
     {{
       "index": 1,
-      "duration": 15,
-      "narration": "나레이션 (분석적이면서 이해하기 쉬운 구어체, TTS용)",
-      "subtitle": "숫자+단위 포함 15자 이내",
-      "image_prompt": "English only. RULE: Translate THIS scene's narration KEY ECONOMIC CONCEPT into a vivid documentary visual — what object/place/phenomenon PHYSICALLY represents the economic idea. Structure: [Specific visual subject embodying economic concept] + [what it is doing/state] + [environment/atmosphere] + [camera angle]. BAD: 'economy dark background'. GOOD: 'global stock market trading floor in freefall, hundreds of red ticker screens reflecting panic on traders faces, dramatic cold blue cinematic documentary, wide establishing shot'. No text, no letters.",
-      "video_query": "economy documentary dark cinematic",
+      "duration": 20,
+      "narration": "나레이션 — 1인칭 대화체 존댓말, 구체적 장면 묘사 오프닝, 수치+맥락 포함, TTS용",
+      "subtitle": "핵심 수치 또는 키워드 15자 이내",
+      "image_prompt": "English only. white round head faceless character(s) + realistic background setting that matches narration. RULE: Translate THIS scene's narration KEY ECONOMIC CONCEPT into a specific visual. Structure: [realistic location/setting matching narration] + [white round head faceless character doing/reacting] + [atmosphere/lighting]. Include: no text, no watermark. Example: 'bank loan counter interior, white round head faceless character looking worried holding documents, bank officer with concerned expression behind desk, realistic cinematic 16:9, no text, no watermark'",
       "bg_color": "#0d1b2a"
     }}
   ]

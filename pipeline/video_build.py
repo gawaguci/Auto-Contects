@@ -2,8 +2,20 @@
 
 from __future__ import annotations
 
+import os
 import subprocess
 from pathlib import Path
+
+
+def _run_hidden(cmd: list, **kwargs):
+    """Windows에서 콘솔 창이 뜨지 않도록 subprocess.run을 래핑한다."""
+    if os.name == "nt":
+        si = subprocess.STARTUPINFO()
+        si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        si.wShowWindow = subprocess.SW_HIDE
+        kwargs.setdefault("startupinfo", si)
+        kwargs.setdefault("creationflags", subprocess.CREATE_NO_WINDOW)
+    return subprocess.run(cmd, **kwargs)
 
 import config
 from pipeline.file_naming import build_video_filename
@@ -51,7 +63,7 @@ def _build_scene_clip(
     zoom_increment = 0.02 / max(total_frames, 1)
 
     cmd = [
-        "ffmpeg", "-y",
+        r"C:\ffmpeg\ffmpeg.exe", "-y",
         "-loop", "1",
         "-i", str(image_path),
         "-vf", (
@@ -66,7 +78,7 @@ def _build_scene_clip(
         str(output_path),
     ]
 
-    result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    result = _run_hidden(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if result.returncode != 0:
         raise RuntimeError(f"클립 생성 실패 ({image_path.name}): {result.stderr[-500:]}")
 
@@ -106,7 +118,7 @@ def _concat_clips_with_fade(
     filter_complex = ";".join(filter_parts)
 
     cmd = [
-        "ffmpeg", "-y",
+        r"C:\ffmpeg\ffmpeg.exe", "-y",
         *inputs,
         "-filter_complex", filter_complex,
         "-map", prev_label,
@@ -116,7 +128,7 @@ def _concat_clips_with_fade(
         str(output_path),
     ]
 
-    result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    result = _run_hidden(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if result.returncode != 0:
         # fallback: 페이드 없이 concat
         _concat_clips_simple(clip_paths, output_path)
@@ -130,14 +142,14 @@ def _concat_clips_simple(clip_paths: list[Path], output_path: Path) -> None:
             f.write(f"file '{clip.resolve()}'\n")
 
     cmd = [
-        "ffmpeg", "-y",
+        r"C:\ffmpeg\ffmpeg.exe", "-y",
         "-f", "concat",
         "-safe", "0",
         "-i", str(list_file),
         "-c", "copy",
         str(output_path),
     ]
-    result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    result = _run_hidden(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     list_file.unlink(missing_ok=True)
     if result.returncode != 0:
         raise RuntimeError(f"클립 연결 실패: {result.stderr[-500:]}")
@@ -179,7 +191,7 @@ def _add_audio_and_subtitles(
     filter_str = ",".join(subtitle_filters)
 
     cmd = [
-        "ffmpeg", "-y",
+        r"C:\ffmpeg\ffmpeg.exe", "-y",
         "-i", str(video_path),
         "-i", str(audio_path),
         "-filter_complex", f"[0:v]{filter_str}[vout]",
@@ -194,7 +206,7 @@ def _add_audio_and_subtitles(
         str(output_path),
     ]
 
-    result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    result = _run_hidden(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if result.returncode != 0:
         # fallback: 자막 없이 오디오만 합성
         _add_audio_only(video_path, audio_path, output_path)
@@ -203,7 +215,7 @@ def _add_audio_and_subtitles(
 def _add_audio_only(video_path: Path, audio_path: Path, output_path: Path) -> None:
     """자막 없이 오디오만 합성 (fallback)."""
     cmd = [
-        "ffmpeg", "-y",
+        r"C:\ffmpeg\ffmpeg.exe", "-y",
         "-i", str(video_path),
         "-i", str(audio_path),
         "-c:v", "copy",
@@ -212,7 +224,7 @@ def _add_audio_only(video_path: Path, audio_path: Path, output_path: Path) -> No
         "-shortest",
         str(output_path),
     ]
-    result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    result = _run_hidden(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if result.returncode != 0:
         raise RuntimeError(f"오디오 합성 실패: {result.stderr[-500:]}")
 

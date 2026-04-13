@@ -5,51 +5,84 @@
 
 유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
 
-== 카테고리 포맷: 심리학 (효기심 다큐 스타일 참조) ==
-벤치마킹 스타일:
-- 검정/다크 배경 + 큰 흰색 수치 강조 씬 반복
-- 실사 배경 영상 위에 반투명 자막 박스
-- 씬당 2~5초 빠른 템포 (훅 구간) → 후반부 길어짐
-- 수치/통계는 별도 씬으로 분리해서 크게 강조
-- 나레이션은 구어체, 마치 옆에서 말해주는 친구 같은 톤
+== 카테고리 포맷: 심리학 (부자의경제학 채널 스타일 + 심리학 다큐) ==
 
-핵심 규칙:
-- subtitle에 숫자+단위 포함 시 Remotion CountUp 애니메이션 자동 발동
-- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 배지 자동
-- narration에 "방법/루틴/하세요" → solution 씬 배지 자동
-- narration에 큰따옴표 인용 → quote 씬 배지 자동
-- bg_color: 심리학 다크 테마 (#0d0a1e, #1a0d2e, #0a0a1a, #160b2e, #0f172a)
-- video_query: 씬 분위기에 맞는 스톡 영상 검색 키워드 (영문)
-  예: "brain waves dark", "crowd psychology", "decision making office"
+━━━ 나레이션 스타일 규칙 ━━━
 
-장면 구성:
-  장면 1  ( 15초): hook — 충격 통계 수치로 시작. subtitle에 숫자 필수. 빠르고 강렬하게
-  장면 2  ( 15초): hook_data — 수치만 크게 강조하는 씬. subtitle이 곧 메인 비주얼
-  장면 3  ( 30초): problem — 이 현상이 왜 일어나는지 배경 설명. 심리학 용어 등장
-  장면 4  ( 45초): numbered — "첫 번째 이유:" 핵심 심리 메커니즘 + 연구 결과
-  장면 5  ( 30초): stat — 관련 통계/실험 수치 강조 씬. subtitle에 숫자 필수
-  장면 6  ( 45초): numbered — "두 번째 이유:" 행동경제학적 근거 + 사례
-  장면 7  ( 45초): numbered — "세 번째 이유:" 일상 속 사례로 연결
-  장면 8  ( 30초): quote — 심리학자 또는 철학자 실제 명언. 큰따옴표 필수
-  장면 9  ( 45초): solution — "첫 번째 방법:" 즉시 실천 가능한 구체적 팁
-  장면 10 ( 45초): solution — "두 번째 방법:" 과학적 근거 있는 루틴
-  장면 11 ( 45초): solution — "세 번째 방법:" 장기 습관으로 연결
-  장면 12 ( 30초): stat — 방법 적용 시 기대 효과 수치. subtitle에 숫자 필수
-  장면 13 ( 30초): closing — 핵심 메시지 한 문장 + 감성적 마무리
-  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 영상 예고
+✅ 필수:
+  - 1인칭 대화체 존댓말: "~거든요", "~예요", "~겁니다", "~거죠"
+  - 오프닝: 구체적 일상 장면 묘사로 시작 ("어떤 실험이 있었습니다. 참가자들에게...")
+  - 수치 앞에 맥락 부여: "흥미로운 연구 결과가 있는데요." → 수치 제시
+  - 비유 사용: 심리 개념 → 일상 언어로 ("뇌는 에너지를 아끼기 위해 마치 GPS처럼...")
+  - 클리프행어: 각 장면 끝을 다음 장면이 궁금하게 마무리
+  - 공감 유도 마무리: "여러분도 이런 경험 해보신 적 있으신가요?" + 댓글 유도
+
+❌ 절대 금지:
+  - 강의 말투, 뉴스 앵커 말투
+  - 공허한 문장 ("이 요소가 중요합니다")
+  - 수치 없이 형식만 채우기
+
+━━━ 장면 구성 (총 14장면, 540초) ━━━
+
+  장면 1  (20초): hook     — 충격 심리 실험 또는 통계로 오프닝. subtitle에 숫자 필수
+  장면 2  (20초): hook     — 이 현상이 왜 중요한지 확장. 일상 속 사례 연결
+  장면 3  (30초): problem  — 이 현상이 일어나는 심리적 배경. 심리학 용어 등장
+  장면 4  (40초): numbered — "첫 번째 이유:" 핵심 심리 메커니즘 + 연구 결과
+  장면 5  (30초): stat     — 관련 실험/통계 수치 강조. subtitle에 숫자 필수
+  장면 6  (40초): numbered — "두 번째 이유:" 행동경제학적 근거 + 사례
+  장면 7  (40초): numbered — "세 번째 이유:" 일상 속 사례로 연결
+  장면 8  (30초): stat     — 두 번째 핵심 수치. subtitle에 숫자 필수
+  장면 9  (40초): numbered — "네 번째 이유:" 뇌과학/진화심리학 근거
+  장면 10 (40초): numbered — "다섯 번째 이유:" 현대 사회와의 연결
+  장면 11 (30초): solution — "첫 번째 방법:" 즉시 실천 가능한 구체적 팁
+  장면 12 (30초): solution — "두 번째 방법:" 과학적 근거 있는 루틴
+  장면 13 (25초): closing  — 핵심 메시지 + 감성적 마무리
+  장면 14 (25초): closing  — 구독/좋아요 CTA. "여러분도 이런 경험 있으신가요?" 댓글 유도
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (심리학 롱폼 16:9) ━━━
+
+공통 규칙:
+  - 영문 작성, no text, no watermark 항상 포함
+  - 흰 둥근 머리 no-face 캐릭터 (white round head faceless character) 포함
+  - 배경: 실사 또는 반실사 장소 + 캐릭터 합성
+  - 16:9 가로 구도
+  - 분위기: deep purple, dark navy, subtle violet glow
+
+씬별 가이드:
+  장면 1~2 (hook): 심리 충격 수치/실험 강렬하게 시각화
+    - white faceless character reacting with shock/realization
+    - 배경: 실험실, 강의실, 도심 군중 등
+
+  장면 3~5 (problem/stat): 심리 구조·수치 시각화
+    - stat 씬: 캐릭터가 차트/데이터를 가리키거나 반응하는 구도
+    - split-screen 활용: 좌우 대조 상황 표현
+
+  장면 6~10 (numbered): 각 심리 이유를 직접 시각화
+    - narration 핵심 심리 개념을 영문으로 번역해 image_prompt 핵심어로 사용
+    - 뇌, 인물의 감정 반응, 사회적 상황 등 구체적 장면
+
+  장면 11~12 (solution): 희망적·능동적 분위기
+    - 캐릭터가 밝고 자신감 있는 자세
+    - 따뜻한 조명, 열린 공간
+
+  장면 13~14 (closing): 감성적 마무리
+    - 도심 혹은 자연 배경 + 캐릭터가 걷거나 바라보는 장면
+
+bg_color 가이드: #0d0a1e, #1a0d2e, #0a0a1a, #160b2e, #0f172a
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 JSON만 반환 (다른 텍스트 금지):
 {{
   "title": "영상 제목 (궁금증 유발, 30자 이내)",
-  "cta": "구독/좋아요 유도 문구",
+  "cta": "구독/좋아요 유도 문구 (존댓말, 댓글 유도 포함)",
   "scenes": [
     {{
       "index": 1,
-      "duration": 15,
-      "narration": "나레이션 (구어체, TTS용, 분량에 맞게 충분히)",
-      "subtitle": "숫자+단위 포함 15자 이내",
-      "image_prompt": "English background video/image description for stock footage",
-      "video_query": "dark psychology brain waves",
+      "duration": 20,
+      "narration": "나레이션 — 1인칭 대화체 존댓말, 구체적 장면 묘사, 수치+맥락 포함, TTS용",
+      "subtitle": "핵심 수치 또는 키워드 15자 이내",
+      "image_prompt": "English only. white round head faceless character(s) + realistic background. RULE: Translate THIS scene's narration KEY PSYCHOLOGY CONCEPT into a vivid visual. Structure: [realistic setting matching narration] + [white faceless character emotional reaction] + [atmosphere matching psychology theme]. No text, no watermark.",
       "bg_color": "#0d0a1e"
     }}
   ]

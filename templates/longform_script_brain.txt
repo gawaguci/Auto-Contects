@@ -3,53 +3,87 @@
 후크: {topic_hook}
 키워드: {keywords}
 
-유튜브 롱폼 스크립트를 생성하라. 총 15장면, 540초(9분).
+유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
 
-== 카테고리 포맷: 뇌과학 (효기심 다큐 스타일 참조) ==
-벤치마킹 스타일:
-- 뇌/신경망 시각화 배경 + 연구 수치 강조 씬
-- 검정/딥블루 배경 + 큰 흰색 연구 결과 수치
-- "연구에 따르면" → 수치 강조 씬 → 메커니즘 설명 반복 구조
-- 실용적 solution이 후반부 핵심 — 시청 유지율 최고 구간
-- 나레이션: 과학 다큐 해설자 톤, 권위 있으면서도 친근하게
+== 카테고리 포맷: 뇌과학 (오늘은심리학 + 부자의경제학 채널 스타일) ==
 
-핵심 규칙:
-- subtitle에 뇌과학 연구 수치 포함 → Remotion CountUp 자동
-- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 자동
-- narration에 "방법/루틴/하면/해보세요" → solution 씬 자동
-- bg_color: 뇌과학 딥블루 테마 (#020b18, #041018, #071520, #042f2e, #020818)
-- video_query: 뇌과학 관련 스톡 영상 키워드 (영문)
-  예: "neuroscience brain MRI", "focus concentration study", "sleep brain waves"
+━━━ 나레이션 스타일 규칙 ━━━
 
-장면 구성:
-  장면 1  ( 15초): hook — 뇌과학 연구 충격 수치. subtitle에 숫자 필수
-  장면 2  ( 15초): hook_data — 수치 강조 씬. 현대인이 겪는 문제 직관적 표현
-  장면 3  ( 30초): problem — 뇌과학적 원인. 도파민/전두엽/코르티솔 키워드
-  장면 4  ( 30초): stat — 연구 결과 수치 강조. subtitle에 숫자 필수
-  장면 5  ( 45초): numbered — "첫 번째 근거:" 연구/실험으로 증명된 사실
-  장면 6  ( 45초): numbered — "두 번째 근거:" 뇌 메커니즘 상세 설명
-  장면 7  ( 30초): stat — 나쁜 습관이 뇌에 미치는 영향 수치
-  장면 8  ( 45초): numbered — "세 번째 근거:" 일상 습관과 뇌의 연결
-  장면 9  ( 30초): quote — 뇌과학자 또는 신경과학 연구 인용. 큰따옴표 필수
-  장면 10 ( 45초): solution — "첫 번째 방법:" 즉시 실천 가능. "하루 X분이면" 수치 포함
-  장면 11 ( 45초): solution — "두 번째 방법:" 수면/식단/운동 뇌과학 근거
-  장면 12 ( 45초): solution — "세 번째 방법:" 장기 루틴으로 뇌 구조 변화
-  장면 13 ( 30초): stat — 방법 적용 후 뇌 변화 수치. subtitle에 숫자 필수
-  장면 14 ( 30초): closing — 핵심 메시지 + 뇌과학이 증명한 결론
-  장면 15 ( 30초): closing — 구독/좋아요 CTA + 다음 영상 예고
+✅ 필수:
+  - 1인칭 대화체 존댓말: "~거든요", "~예요", "~겁니다", "~거죠"
+  - 오프닝: 구체적 실험 또는 일상 장면 묘사로 시작 ("어떤 실험이 있었어요. 참가자들에게...")
+  - 수치 앞에 맥락 부여: "흥미로운 연구 결과가 있는데요." → 수치 제시
+  - 뇌과학 용어를 일상 언어로 비유: ("전두엽은 마치 브레이크처럼...")
+  - 수치+맥락 필수: "도파민이 X% 감소", "해마가 X일 만에"
+  - 클리프행어: 각 장면 끝을 다음 장면이 궁금하게 마무리
+  - 공감 유도 마무리: "여러분도 이런 경험 해보신 적 있으신가요?" + 댓글 유도
+
+❌ 절대 금지:
+  - 강의 말투, 뉴스 앵커 말투
+  - 수치 없이 형식만 채우기
+  - "이 요소가 중요합니다" 같은 공허한 문장
+
+━━━ 장면 구성 (총 14장면, 540초) ━━━
+
+  장면 1  (20초): hook     — 뇌과학 연구 충격 수치 오프닝. subtitle에 숫자 필수
+  장면 2  (20초): hook     — 이 현상이 왜 중요한지 확장. 일상과 연결
+  장면 3  (30초): problem  — 뇌과학적 원인. 도파민/전두엽/코르티솔 키워드
+  장면 4  (40초): numbered — "첫 번째 근거:" 연구/실험으로 증명된 사실 + 수치
+  장면 5  (30초): stat     — 연구 결과 수치 강조. subtitle에 숫자 필수
+  장면 6  (40초): numbered — "두 번째 근거:" 뇌 메커니즘 상세 설명 + 사례
+  장면 7  (40초): numbered — "세 번째 근거:" 일상 습관과 뇌의 연결
+  장면 8  (30초): stat     — 나쁜 습관이 뇌에 미치는 영향 수치. subtitle에 숫자 필수
+  장면 9  (40초): numbered — "네 번째 근거:" 뇌과학자 연구 인용 + 실험 결과
+  장면 10 (40초): numbered — "다섯 번째 근거:" 현대 사회와의 연결, 진화심리학
+  장면 11 (30초): solution — "첫 번째 방법:" 즉시 실천 가능. "하루 X분이면" 수치
+  장면 12 (30초): solution — "두 번째 방법:" 수면/식단/운동 뇌과학 근거
+  장면 13 (25초): closing  — 핵심 메시지 + 뇌과학이 증명한 감성적 마무리
+  장면 14 (25초): closing  — 구독/좋아요 CTA. "여러분도 이런 경험 있으신가요?" 댓글 유도
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (뇌과학 롱폼 16:9) ━━━
+
+공통 규칙:
+  - 영문 작성, no text, no watermark 항상 포함
+  - 흰 둥근 머리 no-face 캐릭터 (white round head faceless character) 포함
+  - 배경: 실험실, 도심, 사무실, 자연, 반추상 공간
+  - 16:9 가로 구도
+  - 분위기: deep navy blue, teal glow, neural/scientific premium
+
+씬별 가이드:
+  장면 1~2 (hook): 뇌과학 충격 수치/실험 강렬하게 시각화
+    - white faceless character reacting with shock/realization
+    - 배경: 실험실, 강의실, MRI 스캔 배경, 도심 군중
+
+  장면 3~5 (problem/stat): 뇌 구조·수치 시각화
+    - stat 씬: 캐릭터가 차트/데이터를 가리키거나 반응하는 구도
+    - split-screen: 건강한 뇌 vs 손상된 뇌 대조 가능
+
+  장면 6~10 (numbered): 각 뇌과학 근거를 직접 시각화
+    - narration 핵심 뇌과학 용어(dopamine/prefrontal cortex/hippocampus 등) 영문 번역 필수
+    - 뇌 구조, 신경 연결, 감정 반응 등 구체적 장면
+
+  장면 11~12 (solution): 희망적·능동적 분위기
+    - 캐릭터가 밝고 자신감 있는 자세
+    - 따뜻한 조명, 열린 공간, 녹색/teal 자연광
+
+  장면 13~14 (closing): 감성적 마무리
+    - 도심 혹은 자연 배경 + 캐릭터가 걷거나 바라보는 장면
+
+bg_color 가이드: #020b18, #041018, #071520, #042f2e, #020818
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 JSON만 반환 (다른 텍스트 금지):
 {{
   "title": "영상 제목 (궁금증 유발, 30자 이내)",
-  "cta": "구독/좋아요 유도 문구",
+  "cta": "구독/좋아요 유도 문구 (존댓말, 댓글 유도 포함)",
   "scenes": [
     {{
       "index": 1,
-      "duration": 15,
-      "narration": "나레이션 (과학 다큐 톤, TTS용, 분량에 맞게 충분히)",
+      "duration": 20,
+      "narration": "나레이션 — 1인칭 대화체 존댓말, 구체적 실험/장면 묘사, 수치+맥락 포함, TTS용",
       "subtitle": "뇌과학 수치 포함 15자 이내",
-      "image_prompt": "English background video/image description for stock footage",
-      "video_query": "brain neuroscience dark blue",
+      "image_prompt": "English only. white round head faceless character(s) + realistic/scientific background. RULE: Translate THIS scene's neuroscience narration into a concrete visual. Structure: [scientific/realistic setting matching narration] + [white faceless character reaction/action] + [dark premium scientific atmosphere — deep navy/teal]. No text, no watermark.",
       "bg_color": "#020b18"
     }}
   ]

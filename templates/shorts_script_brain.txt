@@ -5,8 +5,18 @@
 
 유튜브 쇼츠 스크립트를 생성하라. 총 11장면, 90초.
 
-== 카테고리 포맷: 뇌과학 ==
-성공 패턴: 연구 수치 훅 → problem → numbered 근거 × 3 → stat 수치 → solution 루틴 × 3 → closing
+== 카테고리 포맷: 뇌과학 (오늘은심리학 채널 스타일) ==
+
+━━━ 나레이션 스타일 ━━━
+✅ 필수:
+  - 1인칭 구어체 존댓말: "~거든요", "~겠죠", "~니까요", "~거죠"
+  - 구체적 연구/실험 장면 묘사로 시작 ("어떤 실험에서...")
+  - 뇌과학 용어를 일상 비유로: 전두엽 → "뇌의 브레이크", 도파민 → "뇌의 보상 시스템"
+  - 수치 앞에 맥락: "놀라운 연구 결과가 있는데요." → 수치
+  - 클리프행어: 각 장면 끝을 다음이 궁금하게
+❌ 절대 금지: 강의 말투, 수치 없이 형식만 채우기
+
+성공 패턴: 연구 수치 훅 → problem → numbered 근거 × 3 → stat 수치 → solution 루틴 × 2 → closing
 핵심 규칙:
 - 장면 1 subtitle에 반드시 뇌과학 연구 수치 포함 (예: "47초 집중력", "40% 저하", "8배 향상")
   → Remotion CountUp 애니메이션이 자동으로 숫자를 카운트업함
@@ -33,8 +43,12 @@
   장면 10( 5초): closing  — 뇌과학이 증명한 핵심 메시지 한 문장
   장면 11( 5초): closing  — 구독/좋아요 CTA
 
-━━━ image_prompt 씬별 Gemini 최적화 가이드 (뇌과학) ━━━
-공통: 영문 작성, no text, no watermark, no letters, no numbers 항상 포함. 분위기: deep blue, teal glow, neural network aesthetic
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (뇌과학 쇼츠 9:16) ━━━
+공통: 영문 작성, no text, no watermark, no letters, no numbers 항상 포함
+  - 흰 둥근 머리 no-face 캐릭터 (white round head faceless character) 포함
+  - 9:16 세로 구도 (vertical portrait format)
+  - 상단 1/4은 제목 배너 공간 — 캐릭터와 핵심 요소를 화면 중하단에 배치
+  - 분위기: deep blue, teal glow, neural network aesthetic
 
 ⚡ image_prompt 핵심 규칙 (반드시 준수):
   각 씬의 narration에 등장하는 뇌과학 용어(도파민/코르티솔/전두엽/해마 등)와 핵심 개념을 영문으로 번역해 image_prompt에 반드시 포함할 것.
@@ -84,7 +98,7 @@ JSON만 반환 (다른 텍스트 금지):
       "duration": 4,
       "narration": "나레이션 (자연스러운 구어체, TTS용)",
       "subtitle": "뇌과학 수치 포함 15자 이내",
-      "image_prompt": "English only. RULE: Translate THIS scene's neuroscience narration into a concrete brain/body visual — which specific brain structure/neurotransmitter/biological process PHYSICALLY shows what the narration describes. Structure: [Specific neural/biological subject from narration] + [what is happening in it] + [scientific/dark environment] + [camera angle]. BAD: 'brain neuroscience dark'. GOOD: 'prefrontal cortex shown as dimming glass structure while dopamine reward pathways fire uncontrollably in electric blue, smartphone notification icons cascading into synaptic gaps causing overload, macro cross-section view, cold clinical blue-teal lighting, dark void background'. No text, no letters.",
+      "image_prompt": "English only. vertical 9:16 portrait format. white round head faceless character + scientific/realistic background. RULE: Translate THIS scene's neuroscience narration into a concrete visual. Structure: [specific neural/scientific subject from narration] + [white faceless character reaction/action] + [environment matching narration] + [9:16 vertical composition — character in middle-lower area]. No text, no letters, no watermark.",
       "bg_color": "#0d1a2e"
     }}
   ]

@@ -11,6 +11,17 @@ import shutil
 import subprocess
 from pathlib import Path
 
+
+def _run_hidden(cmd: list, **kwargs):
+    """Windows에서 콘솔 창이 뜨지 않도록 subprocess.run을 래핑한다."""
+    if os.name == "nt":
+        si = subprocess.STARTUPINFO()
+        si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        si.wShowWindow = subprocess.SW_HIDE
+        kwargs.setdefault("startupinfo", si)
+        kwargs.setdefault("creationflags", subprocess.CREATE_NO_WINDOW)
+    return subprocess.run(cmd, **kwargs)
+
 import config
 from pipeline.file_naming import build_video_filename
 from pipeline.image_gen import generate_scene_image
@@ -45,7 +56,7 @@ def _check_deps() -> None:
     if nm.is_dir():
         return
     print("    npm install (최초 1회)...")
-    r = subprocess.run(
+    r = _run_hidden(
         [_cmd("npm"), "install"], cwd=str(config.REMOTION_DIR),
         capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=300,
     )
@@ -218,6 +229,7 @@ def _to_json(script: Script, category: dict, job_dir: Path, image_style: int = 0
     # SRT 자막 파싱 → subtitles 배열
     subtitles = _parse_srt(job_dir / "subtitles.srt")
 
+    res = config.VIDEO_RESOLUTION.get(script.version, config.VIDEO_RESOLUTION["shorts"])
     data = {
         "version": script.version,
         "title": script.title,
@@ -227,8 +239,8 @@ def _to_json(script: Script, category: dict, job_dir: Path, image_style: int = 0
         "totalDuration": script.total_duration,
         "cta": script.cta,
         "fps": config.VIDEO_CONFIG["fps"],
-        "width": config.VIDEO_CONFIG["width"],
-        "height": config.VIDEO_CONFIG["height"],
+        "width": res["width"],
+        "height": res["height"],
         "fullAudioFile": full_static,
         "scenes": [
             {
@@ -240,6 +252,7 @@ def _to_json(script: Script, category: dict, job_dir: Path, image_style: int = 0
                 "bgColor": s.bg_color,
                 "bgImage": _copy_bg(str(scene_images.get(s.index, "")), s.index),
                 "audioFile": f"audio/{job_id}/scene_{s.index:02d}.mp3",
+                "role": s.role or "",
             }
             for s in script.scenes
         ],
@@ -280,7 +293,7 @@ def render_video(
     print(f"    렌더링 시작 ({script.total_duration:.1f}초, {n}씬)...")
 
     try:
-        r = subprocess.run(
+        r = _run_hidden(
             cmd, cwd=str(config.REMOTION_DIR),
             capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=1800,
         )

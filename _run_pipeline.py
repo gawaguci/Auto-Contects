@@ -546,30 +546,33 @@ def main():
                 set_status("running", output_video=output_video_hint, render_mode=render_mode)
                 next_step = 4
 
-        # 캡컷 프로젝트 생성
-        current_step = "캡컷 프로젝트 생성"
-        set_status("running", output_video=output_video_hint, render_mode=render_mode)
-        from pipeline.capcut_project import create_capcut_project
-        project_dir = _run_step(
-            next_step, total_steps,
-            "\U0001f39e\ufe0f  캡컷 프로젝트 생성 중",
-            create_capcut_project, script, job_dir,
-        )
-        completed_steps = next_step
-        set_status("running", output_video=output_video_hint, render_mode=render_mode)
-        print(f"     draft_content.json")
+        # 캡컷 프로젝트 생성 + 실행 (capcut 모드일 때만)
+        launched = False
+        if render_mode == "capcut":
+            current_step = "캡컷 프로젝트 생성"
+            set_status("running", output_video=None, render_mode=render_mode)
+            from pipeline.capcut_project import create_capcut_project
+            project_dir = _run_step(
+                next_step, total_steps,
+                "\U0001f39e\ufe0f  캡컷 프로젝트 생성 중",
+                create_capcut_project, script, job_dir,
+            )
+            completed_steps = next_step
+            set_status("running", output_video=None, render_mode=render_mode)
+            print(f"     draft_content.json")
 
-        # 캡컷 자동 실행
-        current_step = "캡컷 실행"
-        set_status("running", output_video=output_video_hint, render_mode=render_mode)
-        from pipeline.capcut_launcher import launch_capcut
-        print(f"[{next_step + 1}/{total_steps}] \U0001f680 캡컷 자동 실행 중...", end="", flush=True)
-        launched = launch_capcut(project_dir)
-        completed_steps = total_steps
-        if launched:
-            print(f"  \u2705 프로젝트 로드 완료")
+            current_step = "캡컷 실행"
+            set_status("running", output_video=None, render_mode=render_mode)
+            from pipeline.capcut_launcher import launch_capcut
+            print(f"[{next_step + 1}/{total_steps}] \U0001f680 캡컷 자동 실행 중...", end="", flush=True)
+            launched = launch_capcut(project_dir)
+            completed_steps = total_steps
+            if launched:
+                print(f"  \u2705 프로젝트 로드 완료")
+            else:
+                print()
         else:
-            print()
+            completed_steps = total_steps
 
         set_status(
             "completed",
@@ -590,16 +593,20 @@ def main():
             print(f"     \u251c\u2500\u2500 {final_path.name}              \u2190 {render_note}")
         else:
             print(f"     \u251c\u2500\u2500 (mp4 없음)             \u2190 캡컷 프로젝트 모드")
-        print(f"     \u251c\u2500\u2500 clips/                 \u2190 캡컷용 씬 클립")
         print(f"     \u251c\u2500\u2500 audio/                 \u2190 TTS 음성")
         print(f"     \u251c\u2500\u2500 images/                \u2190 장면 이미지")
-        print(f"     \u2514\u2500\u2500 capcut_project/        \u2190 캡컷 드래프트")
+        if render_mode == "capcut":
+            print(f"     \u251c\u2500\u2500 clips/                 \u2190 캡컷용 씬 클립")
+            print(f"     \u2514\u2500\u2500 capcut_project/        \u2190 캡컷 드래프트")
         print()
 
-        if not launched:
-            print("  \u25b6 캡컷에서 프로젝트를 열고 \"내보내기\" 버튼을 누르세요.")
+        if render_mode == "capcut":
+            if not launched:
+                print("  \u25b6 캡컷에서 프로젝트를 열고 \"내보내기\" 버튼을 누르세요.")
+            else:
+                print("  \u25b6 캡컷에서 \"내보내기\" 버튼만 누르면 완료!")
         else:
-            print("  \u25b6 캡컷에서 \"내보내기\" 버튼만 누르면 완료!")
+            print("  \u25b6 완료된 mp4 파일을 확인하세요.")
         print()
     except KeyboardInterrupt:
         set_status("stopped", error="사용자 중단")

@@ -5,51 +5,79 @@
 
 유튜브 롱폼 스크립트를 생성하라. 총 14장면, 540초(9분).
 
-== 카테고리 포맷: 한국사 X파일 (효기심 다큐 스타일 직접 참조) ==
-벤치마킹 스타일 (효기심 채널 — 한국 정치/역사):
-- 한국사 관련 실사 이미지/영상 배경 (고궁, 유물, 역사 사진)
-- 검정 배경 + 큰 흰색 수치 강조 씬
-- 지도/연표 이미지에 강조 오버레이
-- "교과서에 없는" "역사가 숨긴" 프레임으로 시청자 호기심 자극
-- 감성적 클로징 — 민족 자긍심 또는 안타까움 자극 (공유율↑)
-- 나레이션: 진지하면서도 열정적인 다큐 해설자 톤
+== 카테고리 포맷: 한국사 X파일 (부자의경제학 스타일 + 역사 다큐) ==
 
-핵심 규칙:
-- subtitle에 한국사 수치 포함 → Remotion CountUp 자동
-- narration에 "첫 번째/두 번째/세 번째" → numbered 씬 자동
-- narration에 큰따옴표 인용 → quote 씬 자동
-- bg_color: 한국사 다크 테마 (#100a00, #1a0d00, #0a0800, #150e00, #0d0800)
-- video_query: 한국사 관련 스톡 영상 키워드 (영문)
-  예: "joseon dynasty korea", "korean traditional palace", "korean independence movement"
+━━━ 나레이션 스타일 규칙 ━━━
 
-장면 구성:
-  장면 1  ( 15초): hook — 한국사 충격 수치 또는 '교과서에 없는' 사실. subtitle에 숫자 필수
-  장면 2  ( 15초): hook_data — 핵심 수치 강조 씬
-  장면 3  ( 30초): problem — 우리가 몰랐던 이유. 역사 왜곡 또는 숨겨진 배경
-  장면 4  ( 45초): numbered — "첫 번째 숨겨진 사실:" 역사 기록과 수치
-  장면 5  ( 30초): stat — 관련 역사 통계 강조. subtitle에 숫자 필수
-  장면 6  ( 45초): numbered — "두 번째 숨겨진 사실:" 더 충격적인 사실
-  장면 7  ( 45초): numbered — "세 번째 숨겨진 사실:" 현재와 연결
-  장면 8  ( 30초): quote — 역사 인물 실제 발언 또는 기록. 큰따옴표 필수
-  장면 9  ( 45초): numbered — "네 번째 숨겨진 사실:" 국제적 맥락
-  장면 10 ( 45초): numbered — "다섯 번째 숨겨진 사실:" 최대 반전
-  장면 11 ( 30초): stat — 역사적 영향력 수치. subtitle에 숫자 필수
-  장면 12 ( 30초): quote — 역사가 또는 독립운동가 발언. 큰따옴표 필수
-  장면 13 ( 30초): closing — 역사 교훈 + 민족 자긍심 감성 마무리
-  장면 14 ( 30초): closing — 구독/좋아요 CTA + 다음 한국사 영상 예고
+✅ 필수:
+  - 1인칭 대화체 존댓말: "~거든요", "~예요", "~겁니다"
+  - 오프닝: 역사적 장면 생생히 묘사 ("1592년 4월, 부산 앞바다에...")
+  - "우리가 알던 게 틀렸다" 구조 — 통념 → 반박 → 진실
+  - 수치+맥락: "기록이 있습니다." → 수치 제시
+  - 현재와의 연결: 역사 → "그리고 이건 지금 우리에게도..."
+  - 클리프행어 필수, 감성적 마무리
+  - "교과서엔 없는", "역사가 숨긴" 프레임으로 시청자 호기심 자극
+
+❌ 절대 금지:
+  - 뉴스 앵커/교과서 말투
+  - 수치 없이 형식만 채우기
+
+━━━ 장면 구성 (총 14장면, 540초) ━━━
+
+  장면 1  (20초): hook     — 충격 한국사 수치 또는 사건으로 오프닝. subtitle에 숫자 필수
+  장면 2  (20초): problem  — 우리가 잘못 알고 있는 통념 지적
+  장면 3  (30초): problem  — 역사 왜곡의 배경 또는 진실이 가려진 이유
+  장면 4  (40초): numbered — "첫 번째 숨겨진 사실:" 구체적 역사 근거 + 수치
+  장면 5  (30초): stat     — 관련 역사 통계/수치. subtitle에 숫자 필수
+  장면 6  (40초): numbered — "두 번째 숨겨진 사실:" 더 충격적인 사실
+  장면 7  (40초): numbered — "세 번째 숨겨진 사실:" 최대 반전
+  장면 8  (30초): stat     — 두 번째 역사 수치. subtitle에 숫자 필수
+  장면 9  (40초): numbered — "네 번째 숨겨진 사실:" 후속 사건 또는 결과
+  장면 10 (40초): numbered — "다섯 번째 숨겨진 사실:" 현대와의 연결
+  장면 11 (30초): solution — 이 역사에서 배울 수 있는 교훈 1
+  장면 12 (30초): solution — 교훈 2 + 현재 적용
+  장면 13 (25초): closing  — 민족 자긍심 또는 안타까움 자극하는 감성적 역사 마무리
+  장면 14 (25초): closing  — 구독/좋아요 CTA + 댓글 유도
+
+━━━ image_prompt 씬별 Gemini 최적화 가이드 (한국사 X파일 롱폼 16:9) ━━━
+
+공통 규칙:
+  - 영문 작성, no text, no watermark 항상 포함
+  - 흰 둥근 머리 no-face 캐릭터 (white round head faceless character) 포함
+  - 배경: 역사적 장소/시대 실사 + 캐릭터 합성
+  - 16:9 가로 구도
+  - 분위기: dark crimson, burnt amber, torchlight, historical realism
+
+씬별 가이드:
+  장면 1~3 (hook/problem): 역사 충격 장면
+    - white faceless character reacting with shock/confusion
+    - 역사 배경: 전쟁터, 궁궐, 항구, 시장 등 시대 맞는 장소
+
+  장면 4~10 (numbered/stat): 각 역사 팩트 직접 시각화
+    - narration 핵심 역사 사건·인물·장소를 영문 번역해 image_prompt 핵심어로 사용
+    - split-screen 활용: 통념 vs 진실, 전과 후 등 대조
+
+  장면 11~12 (solution): 역사 교훈 → 현대 연결
+    - 과거 배경 + 현대 도시 전환 구도
+
+  장면 13~14 (closing): 감성적 역사 마무리
+    - 한국 상징물(태극기, 고궁 등) + 희망적 분위기로 마무리
+
+bg_color 가이드: #100a00, #1a0d00, #0a0800, #150e00, #0d0800
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 JSON만 반환 (다른 텍스트 금지):
 {{
   "title": "영상 제목 (궁금증 유발, 30자 이내)",
-  "cta": "구독/좋아요 유도 문구",
+  "cta": "구독/좋아요 유도 문구 (존댓말, 댓글 유도 포함)",
   "scenes": [
     {{
       "index": 1,
-      "duration": 15,
-      "narration": "나레이션 (다큐 해설자 톤, TTS용, 분량에 맞게 충분히)",
-      "subtitle": "한국사 수치 포함 15자 이내",
-      "image_prompt": "English background video/image description for stock footage",
-      "video_query": "joseon dynasty traditional korean palace",
+      "duration": 20,
+      "narration": "나레이션 — 1인칭 대화체 존댓말, 생생한 역사 장면 묘사, 수치+맥락, TTS용",
+      "subtitle": "역사 수치 또는 키워드 15자 이내",
+      "image_prompt": "English only. white round head faceless character(s) + Korean historical realistic background. RULE: Translate THIS scene's Korean history narration into a specific visual. Structure: [Korean historical location/era setting] + [white faceless character reaction] + [dramatic historical atmosphere — dark crimson/torchlight]. No text, no watermark.",
       "bg_color": "#100a00"
     }}
   ]

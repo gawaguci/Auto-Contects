@@ -344,6 +344,12 @@ VIDEO_CONFIG = {
     "longform_max": 720,
 }
 
+# 버전별 해상도
+VIDEO_RESOLUTION = {
+    "shorts":   {"width": 1080, "height": 1920},  # 9:16 세로
+    "longform": {"width": 1920, "height": 1080},  # 16:9 가로
+}
+
 IMAGE_STYLE = "cinematic, 4K, vertical 9:16, soft lighting, "
 
 # --- Remotion ---
